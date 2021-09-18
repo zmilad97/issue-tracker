@@ -1,7 +1,7 @@
 package com.github.zmilad97.bugtracker.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class User {
@@ -92,5 +92,34 @@ public class User {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+
+    public List<String> getPermissionList() {
+        if (this.permissions != null && this.permissions.length() > 0) {
+            return Arrays.asList(this.permissions.split(","));
+        }
+        return new ArrayList<>();
+    }
+
+    public List<String> getRoleList() {
+        if (this.roles != null && this.roles.length() > 0) {
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, email);
     }
 }

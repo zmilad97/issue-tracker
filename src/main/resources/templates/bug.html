@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head :: #header"></div>
+    <title th:text="'Bug : '+${bug.getTitle()}"></title>
+</head>
+<body>
+
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-header header-shadow">
+        <div class="app-header__logo">
+            <div class="logo-src"></div>
+            <div class="header__pane ml-auto">
+                <div>
+                    <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                            data-class="closed-sidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="app-header__mobile-menu">
+            <div>
+                <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                </button>
+            </div>
+        </div>
+        <div class="app-header__menu">
+                <span>
+                    <button type="button"
+                            class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        </span>
+                    </button>
+                </span>
+        </div>
+    </div>
+    <div class="app-main">
+        <div th:insert="fragments/side :: side"></div>
+        <div class="app-main__outer">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                </i>
+                            </div>
+                            <div>
+                                <div th:text="'Bug : ' + ${bug.getTitle}"></div>
+                                <div class="page-title-subheading"> You can see Bug Details here
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                        <div class="card-body mb-3 card text-white bg-danger" th:if="${bug.getPriority()} == 1">
+                            <div class="card-header">
+                                <div class="pull-right ml-auto">
+                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs'}" th:text="'Show All'"></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Description</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getDescription()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Priority</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getPriority()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>App Version</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getVersion()}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Steps</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Creator</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark"
+                                                   th:text="${bug.getCreator().getFirstName()} + ' '+ ${bug.getCreator().getLastName()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Time Creates</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getTime()}"></p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer d-flex justify-content-center align-items-center">
+                                <div class="">
+                                    <div>
+                                        <a class="btn btn-focus" th:text="'Edit Bug'"
+                                           th:href="@{'/bug/{id}/edit'(id=${bug.getId})}"></a>
+                                        &nbsp;&nbsp;<a class="btn btn-outline-danger ml-auto text-white"
+                                                       th:text="'Delete'"
+                                                       th:href="@{'/bug/{id}/delete'(id=${bug.getId})}"></a>
+                                        &nbsp;&nbsp;
+                                        <a class="btn btn-success" th:text="'Bug Completed'"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body mb-3 card text-white bg-warning" th:if="${bug.getPriority()} == 2">
+                            <div class="card-header">
+                                <div class="pull-right ml-auto">
+                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs'}" th:text="'Show All'"></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row" th:if="${bug.getId() != null }">
+                                    <div class="col-md-6">
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Description</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getDescription()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Priority</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getPriority()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>App Version</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getVersion()}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Steps</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Assigned To</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:if="${bug.getAssigned()!= null }"
+                                                   th:text="${bug.getAssigned().getFirstName()} + ' '+ ${bug.getAssigned().getLastName()}"></p>
+                                                <a th:href="@{'/bug/{id}/assign-user' (id=${bug.getId})}"
+                                                   class="btn btn-primary">Assign To</a>
+
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Time Creates</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getTime()}"></p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div th:unless="${bug.getId() !=null }">
+                                    <div class="col-md-12">
+                                        <div class="card-body">
+                                            You dont have permission for this bug
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-center align-items-center">
+                                <div class="">
+                                    <div>
+                                        <a class="btn btn-focus" th:text="'Edit Bug'"
+                                           th:href="@{'/bug/{id}/edit'(id=${bug.getId})}"></a>
+                                        &nbsp;&nbsp;<a class="btn btn-outline-danger ml-auto "
+                                                       th:text="'Delete'"
+                                                       th:href="@{'/bug/{id}/delete'(id=${bug.getId})}"></a>
+                                        &nbsp;&nbsp;
+                                        <a class="btn btn-success" th:text="'Bug Completed'"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body mb-3 card text-white bg-alternate" th:if="${bug.getPriority()} == 3">
+                            <div class="card-header">
+                                <div class="pull-right ml-auto">
+                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs'}" th:text="'Show All'"></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Description</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getDescription()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Priority</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getPriority()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>App Version</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getVersion()}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Steps</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Creator</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark"
+                                                   th:text="${bug.getCreator().getFirstName()} + ' '+ ${bug.getCreator().getLastName()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Time Creates</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getTime()}"></p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer d-flex justify-content-center align-items-center">
+                                <div class="">
+                                    <div>
+                                        <a class="btn btn-focus" th:text="'Edit Bug'"
+                                           th:href="@{'/bug/{id}/edit'(id=${bug.getId})}"></a>
+                                        &nbsp;&nbsp;<a class="btn btn-outline-danger ml-auto "
+                                                       th:text="'Delete'"
+                                                       th:href="@{'/bug/{id}/delete'(id=${bug.getId})}"></a>
+                                        &nbsp;&nbsp;
+                                        <a class="btn btn-success" th:text="'Bug Completed'"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:insert="fragments/foot :: #footer"></div>
+
+</body>
+
+</html>

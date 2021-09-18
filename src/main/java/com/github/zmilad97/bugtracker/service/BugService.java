@@ -1,0 +1,145 @@
+package com.github.zmilad97.bugtracker.service;
+
+import com.github.zmilad97.bugtracker.dtos.BugDto;
+import com.github.zmilad97.bugtracker.dtos.UserDto;
+import com.github.zmilad97.bugtracker.model.Bug;
+import com.github.zmilad97.bugtracker.model.Team;
+import com.github.zmilad97.bugtracker.model.User;
+import com.github.zmilad97.bugtracker.repository.BugRepository;
+import com.github.zmilad97.bugtracker.repository.UserRepository;
+import com.github.zmilad97.bugtracker.security.SecurityUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+@Service
+public class BugService {
+    private final BugRepository bugRepository;
+    private final UserRepository userRepository;
+    private final TeamService teamService;
+
+    @Autowired
+    public BugService(BugRepository bugRepository, UserRepository userRepository, TeamService teamService) {
+        this.bugRepository = bugRepository;
+        this.userRepository = userRepository;
+        this.teamService = teamService;
+    }
+
+
+    public List<Bug> retrieveBugs() {
+        return bugRepository.findBugByCreatorEquals(SecurityUtil.getCurrentUser());
+    }
+
+    public Bug getBug(int id) {
+        User user = SecurityUtil.getCurrentUser();
+        Bug bug = bugRepository.findBugById(id);
+        BugDto bugDto = new BugDto();
+        if (bug != null && bug.getCreator().equals(user)) {
+            return bug;
+        } else
+            return new Bug();
+    }
+
+    public void save(BugDto bugDto) {
+        Bug bug = new Bug();
+        bug.setTeam(teamService.getTeamById(bugDto.getTeam()));
+        bug.setTime(LocalDateTime.now().toString());
+        bug.setSteps(bugDto.getSteps());
+        bug.setDescription(bugDto.getDescription());
+        bug.setVersion(bugDto.getVersion());
+        bug.setTitle(bugDto.getTitle());
+        bug.setAssigned(userRepository.findUserById(bugDto.getAssignedId()));
+        bug.setCreator(SecurityUtil.getCurrentUser());
+        bug.setPriority(bugDto.getPriority());
+        bugRepository.save(bug);
+    }
+
+    public BugDto getBugDto(int id) {
+        Bug bug = getBug(id);
+        BugDto bugDto = new BugDto();
+        bugDto.setId(bug.getId());
+        bugDto.setDescription(bug.getDescription());
+        bugDto.setTitle(bug.getTitle());
+        bugDto.setTime(bug.getTime());
+        bugDto.setPriority(bug.getPriority());
+        if (bug.getAssigned() != null)
+            bugDto.setAssignedId(bug.getAssigned().getId());
+        if (bug.getTeam() != null)
+            bugDto.setTeam(bug.getTeam().getId());
+        bugDto.setCreatorId(bug.getCreator().getId());
+        bugDto.setSteps(bug.getSteps());
+        bugDto.setVersion(bug.getVersion());
+
+        if (bug.getTeam() != null)
+            bugDto.setTeamName(bug.getTeam().getTitle());
+        else
+            bugDto.setTeamName("No team please set a team first");
+        if (bug.getAssigned() != null)
+            bugDto.setAssignedName(bug.getAssigned().getFirstName() + " " + bug.getAssigned().getLastName());
+        else
+            bugDto.setAssignedName("No One");
+
+        return bugDto;
+    }
+
+    public void update(BugDto bugDto) {
+        Bug bug = bugRepository.findBugById(bugDto.getId());
+        if (bug != null && bug.getCreator().equals(SecurityUtil.getCurrentUser())) {
+            bug.setSteps(bugDto.getSteps());
+            bug.setDescription(bugDto.getDescription());
+            bug.setVersion(bugDto.getVersion());
+            bug.setTitle(bugDto.getTitle());
+            bug.setAssigned(userRepository.findUserById(bugDto.getAssignedId()));
+            bug.setTeam(teamService.getTeamById(bugDto.getTeam()));
+            bug.setCreator(SecurityUtil.getCurrentUser());
+            bug.setPriority(bugDto.getPriority());
+            bugRepository.save(bug);
+        }
+    }
+
+    public void deleteBug(int id) {
+        Bug bug = bugRepository.findBugById(id);
+        if (bug.getCreator().equals(SecurityUtil.getCurrentUser())) {
+            bugRepository.delete(bug);
+        }
+
+
+    }
+
+    public void saveAssign(int bugId, int userId) {
+        Bug bug = bugRepository.findBugById(bugId);
+        if (bug != null && bug.getCreator().equals(SecurityUtil.getCurrentUser())) {
+            User user = userRepository.findUserById(userId);
+            if (user != null) {
+                List<Team> usersTeam = teamService.getUserTeams(user.getId());
+                if (usersTeam.contains(bug.getTeam())) {
+                    bug.setAssigned(user);
+                    bugRepository.save(bug);
+                }
+            }
+        }
+    }
+
+    public List<UserDto> assignUser(int id) {
+        Bug bug = bugRepository.findBugById(id);
+        List<UserDto> userDtos = new ArrayList<>();
+        if (bug != null && bug.getTeam() != null) {
+            Set<User> users = teamService.getTeamById(bug.getTeam().getId()).getMembers();
+            users.forEach(user -> {
+                UserDto userDto = new UserDto();
+                userDto.setId(user.getId());
+                userDto.setUsername(user.getUsername());
+                userDto.setFirstName(user.getFirstName());
+                userDto.setLastName(user.getLastName());
+                userDtos.add(userDto);
+            });
+
+        }
+
+        return userDtos;
+    }
+}
