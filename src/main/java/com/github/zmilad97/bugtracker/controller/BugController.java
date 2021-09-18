@@ -68,6 +68,14 @@ public class BugController {
     }
 
 
+    @GetMapping("/bug/assigned-to-me")
+    public ModelAndView assignedToMe() {
+        ModelAndView modelAndView = new ModelAndView("assigned-to-me");
+        modelAndView.addObject("bugs", bugService.assignedToMe());
+        return modelAndView;
+    }
+
+
     @PostMapping("bug/save")
     public RedirectView saveBug(@ModelAttribute("bug") BugDto bugDto) {
         bugService.save(bugDto);
@@ -97,7 +105,8 @@ public class BugController {
         return new RedirectView("/bugs");
     }
 
-    public ModelAndView markCompleted() {
+    @GetMapping("/bug/{id}/completed")
+    public ModelAndView markCompleted(@PathVariable String id) {
         return null;
     }
 }
