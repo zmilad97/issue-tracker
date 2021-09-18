@@ -37,7 +37,6 @@ public class BugService {
     public Bug getBug(int id) {
         User user = SecurityUtil.getCurrentUser();
         Bug bug = bugRepository.findBugById(id);
-        BugDto bugDto = new BugDto();
         if (bug != null && bug.getCreator().equals(user)) {
             return bug;
         } else
@@ -70,7 +69,10 @@ public class BugService {
             bugDto.setAssignedId(bug.getAssigned().getId());
         if (bug.getTeam() != null)
             bugDto.setTeam(bug.getTeam().getId());
-        bugDto.setCreatorId(bug.getCreator().getId());
+        if (bug.getCreator() != null) {
+            bugDto.setCreatorName(bug.getCreator().getFirstName() + " " + bug.getCreator().getLastName());
+            bugDto.setCreatorId(bug.getCreator().getId());
+        }
         bugDto.setSteps(bug.getSteps());
         bugDto.setVersion(bug.getVersion());
 
@@ -155,5 +157,13 @@ public class BugService {
 
     private List<Bug> getAssignedToUserBugs(User user) {
         return bugRepository.findBugsByAssigned(user);
+    }
+
+    public BugDto getAssignedBug(int id) {
+        Bug bug = bugRepository.findBugById(id);
+        if (bug.getAssigned().equals(SecurityUtil.getCurrentUser()))
+            return getBugDto(bug.getId());
+        else
+            return new BugDto();
     }
 }

@@ -74,7 +74,7 @@
                                     <div class="mb-3 card text-white bg-danger" th:if="${bug.getPriority()} == 1">
                                         <div class="card-header">
                                             <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                            <a class="btn btn-success pull-right"
+                                            <a class="btn btn-success ml-auto pull-right"
                                                th:href="@{'/bug/{id}/completed' (id=${bug.getId()})}"
                                                th:text="'Set Completed'"></a>
 
@@ -89,7 +89,7 @@
                                             <div class="pull-right ml-auto">
 
                                                 <a class="btn btn btn-info ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}'(id=${bug.getId})}">
+                                                   th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
                                                     Details
                                                 </a>
                                             </div>
@@ -103,7 +103,7 @@
                                     <div class="mb-3 card text-white bg-warning" th:if="${bug.getPriority()} == 2">
                                         <div class="card-header">
                                             <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                            <a class="btn btn-success pull-right"
+                                            <a class="btn btn-success ml-auto pull-right"
                                                th:href="@{'/bug/{id}/completed' (id=${bug.getId()})}"
                                                th:text="'Set Completed'"></a>
 
@@ -118,7 +118,7 @@
 
                                                 <a class="btn btn btn-info ml-auto pull-right"
 
-                                                   th:href="@{'/bug/{id}'(id=${bug.getId})}">
+                                                   th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
                                                     Details
                                                 </a>
                                             </div>
@@ -133,7 +133,7 @@
                                     <div class="mb-3 card text-white bg-alternate" th:if="${bug.getPriority()} == 3">
                                         <div class="card-header">
                                             <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                            <a class="btn btn-success pull-right"
+                                            <a class="btn btn-success ml-auto pull-right"
                                                th:href="@{'/bug/{id}/completed' (id=${bug.getId()})}"
                                                th:text="'Set Completed'"></a>
 
@@ -150,7 +150,7 @@
 
                                                 <a class="btn btn btn-info ml-auto pull-right"
 
-                                                   th:href="@{'/bug/{id}'(id=${bug.getId})}">
+                                                   th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
                                                     Details
                                                 </a>
                                             </div>

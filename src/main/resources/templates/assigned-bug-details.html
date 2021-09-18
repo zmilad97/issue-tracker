@@ -54,7 +54,8 @@
                             </div>
                             <div>
                                 <div th:text="'Bug : ' + ${bug.getTitle}"></div>
-                                <div class="page-title-subheading"> You can see Bug Details here
+                                <div class="page-title-subheading" th:if="${bug.getTeamName()}"
+                                     th:text="'team : ' + ${bug.getTeamName()}">
                                 </div>
                             </div>
                         </div>
@@ -62,11 +63,13 @@
                     </div>
                 </div>
                 <div class="tab-content">
-                    <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                    <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel"
+                         th:if="${bug.getId()} != null ">
                         <div class="card-body mb-3 card text-white bg-danger" th:if="${bug.getPriority()} == 1">
                             <div class="card-header">
                                 <div class="pull-right ml-auto">
-                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs'}" th:text="'Show All'"></a>
+                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs/assigned-to-me'}"
+                                       th:text="'Show All'"></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -79,7 +82,7 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="' Here needs to be project name '"></p>
+                                                <p class="text-dark" th:text=" 'Here Needs to be Project name' "></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -93,14 +96,13 @@
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
-
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Priority</div>
+                                                    <div>Steps</div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="${bug.getPriority()}"></p>
+                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -119,6 +121,16 @@
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Team Name</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getTeamName()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
                                                     <div>Description</div>
                                                 </div>
                                             </div>
@@ -126,25 +138,16 @@
                                                 <p class="text-dark" th:text="${bug.getDescription()}"></p>
                                             </div>
                                         </div>
+
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Steps</div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
-                                            </div>
-                                        </div>
-                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
-                                            <div class="card-title">
-                                                <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Assigned To</div>
+                                                    <div>Creator</div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <p class="text-dark"
-                                                   th:text="${bug.getAssigned().getFirstName()} + ' '+ ${bug.getAssigned().getLastName()}"></p>
+                                                   th:text="${bug.getCreatorName()}"></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -154,7 +157,7 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text=" 'Nothing Here Yet'"></p>
+                                                <p class="text-dark" th:text="'Nothing  Here Yet '"></p>
                                             </div>
                                         </div>
 
@@ -165,12 +168,7 @@
                             <div class="card-footer d-flex justify-content-center align-items-center">
                                 <div class="">
                                     <div>
-                                        <a class="btn btn-focus" th:text="'Edit Bug'"
-                                           th:href="@{'/bug/{id}/edit'(id=${bug.getId})}"></a>
-                                        &nbsp;&nbsp;<a class="btn btn-outline-danger ml-auto text-white"
-                                                       th:text="'Delete'"
-                                                       th:href="@{'/bug/{id}/delete'(id=${bug.getId})}"></a>
-                                        &nbsp;&nbsp;
+
                                         <a class="btn btn-success" th:text="'Bug Completed'"></a>
                                     </div>
                                 </div>
@@ -179,7 +177,8 @@
                         <div class="card-body mb-3 card text-white bg-warning" th:if="${bug.getPriority()} == 2">
                             <div class="card-header">
                                 <div class="pull-right ml-auto">
-                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs'}" th:text="'Show All'"></a>
+                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs/assigned-to-me'}"
+                                       th:text="'Show All'"></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -192,7 +191,17 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="' Here needs to be project name '"></p>
+                                                <p class="text-dark" th:text=" 'Here Needs to be Project name' "></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Priority</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getPriority()}"></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -206,14 +215,13 @@
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
-
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Priority</div>
+                                                    <div>Steps</div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="${bug.getPriority()}"></p>
+                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -232,6 +240,16 @@
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Team Name</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getTeamName()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
                                                     <div>Description</div>
                                                 </div>
                                             </div>
@@ -239,25 +257,16 @@
                                                 <p class="text-dark" th:text="${bug.getDescription()}"></p>
                                             </div>
                                         </div>
+
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Steps</div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
-                                            </div>
-                                        </div>
-                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
-                                            <div class="card-title">
-                                                <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Assigned To</div>
+                                                    <div>Creator</div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <p class="text-dark"
-                                                   th:text="${bug.getAssigned().getFirstName()} + ' '+ ${bug.getAssigned().getLastName()}"></p>
+                                                   th:text="${bug.getCreatorName()}"></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -267,7 +276,7 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text=" 'Nothing Here Yet'"></p>
+                                                <p class="text-dark" th:text="'Nothing  Here Yet '"></p>
                                             </div>
                                         </div>
 
@@ -278,12 +287,7 @@
                             <div class="card-footer d-flex justify-content-center align-items-center">
                                 <div class="">
                                     <div>
-                                        <a class="btn btn-focus" th:text="'Edit Bug'"
-                                           th:href="@{'/bug/{id}/edit'(id=${bug.getId})}"></a>
-                                        &nbsp;&nbsp;<a class="btn btn-outline-danger ml-auto text-white"
-                                                       th:text="'Delete'"
-                                                       th:href="@{'/bug/{id}/delete'(id=${bug.getId})}"></a>
-                                        &nbsp;&nbsp;
+
                                         <a class="btn btn-success" th:text="'Bug Completed'"></a>
                                     </div>
                                 </div>
@@ -292,7 +296,8 @@
                         <div class="card-body mb-3 card text-white bg-alternate" th:if="${bug.getPriority()} == 3">
                             <div class="card-header">
                                 <div class="pull-right ml-auto">
-                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs'}" th:text="'Show All'"></a>
+                                    <a class="btn btn-primary pull-right" th:href="@{'/bugs/assigned-to-me'}"
+                                       th:text="'Show All'"></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -305,7 +310,17 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="' Here needs to be project name '"></p>
+                                                <p class="text-dark" th:text=" 'Here Needs to be Project name' "></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Priority</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getPriority()}"></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -319,14 +334,13 @@
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
-
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Priority</div>
+                                                    <div>Steps</div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="${bug.getPriority()}"></p>
+                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -345,6 +359,16 @@
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
+                                                    <div>Team Name</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="text-dark" th:text="${bug.getTeamName()}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
+                                            <div class="card-title">
+                                                <div class="d-flex justify-content-center   align-items-center">
                                                     <div>Description</div>
                                                 </div>
                                             </div>
@@ -352,25 +376,16 @@
                                                 <p class="text-dark" th:text="${bug.getDescription()}"></p>
                                             </div>
                                         </div>
+
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
                                             <div class="card-title">
                                                 <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Steps</div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text="${bug.getSteps()}"></p>
-                                            </div>
-                                        </div>
-                                        <div class="card-shadow-info border mb-3 card card-body border-primary">
-                                            <div class="card-title">
-                                                <div class="d-flex justify-content-center   align-items-center">
-                                                    <div>Assigned To</div>
+                                                    <div>Creator</div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <p class="text-dark"
-                                                   th:text="${bug.getAssigned().getFirstName()} + ' '+ ${bug.getAssigned().getLastName()}"></p>
+                                                   th:text="${bug.getCreatorName()}"></p>
                                             </div>
                                         </div>
                                         <div class="card-shadow-info border mb-3 card card-body border-primary">
@@ -380,7 +395,7 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="text-dark" th:text=" 'Nothing Here Yet'"></p>
+                                                <p class="text-dark" th:text="'Nothing  Here Yet '"></p>
                                             </div>
                                         </div>
 
@@ -391,12 +406,7 @@
                             <div class="card-footer d-flex justify-content-center align-items-center">
                                 <div class="">
                                     <div>
-                                        <a class="btn btn-focus" th:text="'Edit Bug'"
-                                           th:href="@{'/bug/{id}/edit'(id=${bug.getId})}"></a>
-                                        &nbsp;&nbsp;<a class="btn btn-outline-danger ml-auto text-white"
-                                                       th:text="'Delete'"
-                                                       th:href="@{'/bug/{id}/delete'(id=${bug.getId})}"></a>
-                                        &nbsp;&nbsp;
+
                                         <a class="btn btn-success" th:text="'Bug Completed'"></a>
                                     </div>
                                 </div>

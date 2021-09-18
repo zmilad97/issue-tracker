@@ -19,6 +19,15 @@ public class BugDto {
     private int team;
     private String teamName;
     private String assignedName;
+    private String creatorName;
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
 
     public int getId() {
         return id;

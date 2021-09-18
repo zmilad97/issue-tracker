@@ -68,10 +68,17 @@ public class BugController {
     }
 
 
-    @GetMapping("/bug/assigned-to-me")
+    @GetMapping("/bugs/assigned-to-me")
     public ModelAndView assignedToMe() {
         ModelAndView modelAndView = new ModelAndView("assigned-to-me");
         modelAndView.addObject("bugs", bugService.assignedToMe());
+        return modelAndView;
+    }
+
+    @GetMapping("/bug/{id}/assigned/details")
+    public ModelAndView assignedDetails(@PathVariable int id) {
+        ModelAndView modelAndView = new ModelAndView("assigned-bug-details");
+        modelAndView.addObject("bug", bugService.getAssignedBug(id));
         return modelAndView;
     }
 
