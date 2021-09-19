@@ -1,4 +1,4 @@
-package com.github.zmilad97.bugtracker.service;
+package com.github.zmilad97.bugtracker.validator;
 
 import com.github.zmilad97.bugtracker.annotation.ValidEmail;
 

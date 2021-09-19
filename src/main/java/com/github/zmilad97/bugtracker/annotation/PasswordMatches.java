@@ -1,6 +1,6 @@
 package com.github.zmilad97.bugtracker.annotation;
 
-import com.github.zmilad97.bugtracker.service.PasswordMatchesValidator;
+import com.github.zmilad97.bugtracker.validator.PasswordMatchesValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
