@@ -1,10 +1,5 @@
 package com.github.zmilad97.bugtracker.dtos;
 
-import com.github.zmilad97.bugtracker.model.Team;
-import com.github.zmilad97.bugtracker.model.User;
-
-import javax.persistence.ManyToOne;
-
 public class ProjectDto {
 
 
@@ -17,7 +12,6 @@ public class ProjectDto {
     private String creatorName;
     private String teamName;
     private String createdAt;
-
 
     public int getId() {
         return id;
