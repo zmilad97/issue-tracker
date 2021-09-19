@@ -18,14 +18,14 @@ public class TeamController {
 
     @GetMapping("teams")
     public ModelAndView teams() {
-        ModelAndView modelAndView = new ModelAndView("teams");
+        ModelAndView modelAndView = new ModelAndView("/team/teams");
         modelAndView.addObject("teams", teamService.getTeamDtoByCreator(SecurityUtil.getCurrentUser().getId()));
         return modelAndView;
     }
 
     @GetMapping("/team/create")
     public ModelAndView createTeam() {
-        ModelAndView modelAndView = new ModelAndView("create-team");
+        ModelAndView modelAndView = new ModelAndView("/team/create-team");
         modelAndView.addObject("team", new TeamDto());
         return modelAndView;
     }
@@ -44,7 +44,7 @@ public class TeamController {
 
     @GetMapping("/team/{id}/edit")
     public ModelAndView editTeam(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("edit-team");
+        ModelAndView modelAndView = new ModelAndView("/team/edit-team");
         modelAndView.addObject("team", teamService.getTeamDtoByTeamId(id));
         return modelAndView;
     }

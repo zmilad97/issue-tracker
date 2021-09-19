@@ -46,7 +46,7 @@ public class BugService {
     public void save(BugDto bugDto) {
         Bug bug = new Bug();
         bug.setTeam(teamService.getTeamById(bugDto.getTeam()));
-        bug.setTime(LocalDateTime.now().toString());
+        bug.setCreatedAt(LocalDateTime.now().toString());
         bug.setSteps(bugDto.getSteps());
         bug.setDescription(bugDto.getDescription());
         bug.setVersion(bugDto.getVersion());
@@ -63,7 +63,7 @@ public class BugService {
         bugDto.setId(bug.getId());
         bugDto.setDescription(bug.getDescription());
         bugDto.setTitle(bug.getTitle());
-        bugDto.setTime(bug.getTime());
+        bugDto.setTime(bug.getCreatedAt());
         bugDto.setPriority(bug.getPriority());
         if (bug.getAssigned() != null)
             bugDto.setAssignedId(bug.getAssigned().getId());

@@ -7,7 +7,6 @@ import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import com.github.zmilad97.bugtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,7 +27,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("index");
+        ModelAndView modelAndView = new ModelAndView("/home/index");
         UserDto userDto = new UserDto();
         userDto.setFirstName(SecurityUtil.getCurrentUser().getFirstName());
         modelAndView.addObject("user", userDto);
@@ -37,7 +36,7 @@ public class HomeController {
 
     @GetMapping("login")
     public String login() {
-        return "login";
+        return "/home/login";
     }
 
 //    @GetMapping("/dashboard")
@@ -47,7 +46,7 @@ public class HomeController {
 
     @GetMapping("/signup")
     public ModelAndView signup() {
-        ModelAndView modelAndView = new ModelAndView("signup");
+        ModelAndView modelAndView = new ModelAndView("/home/signup");
         UserDto userDto = new UserDto();
         modelAndView.addObject("user", userDto);
         return modelAndView;
@@ -61,6 +60,6 @@ public class HomeController {
         } catch (UserAlreadyExistException e) {
             e.printStackTrace();
         }
-        return new ModelAndView("/index", "user", userDto);
+        return new ModelAndView("/home/index", "user", userDto);
     }
 }

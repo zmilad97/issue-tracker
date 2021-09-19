@@ -32,21 +32,21 @@ public class BugController {
 
     @GetMapping("/bugs")
     public ModelAndView bugs() {
-        ModelAndView modelAndView = new ModelAndView("bugs");
+        ModelAndView modelAndView = new ModelAndView("/bug/bugs");
         modelAndView.addObject("bugs", bugService.retrieveBugs());
         return modelAndView;
     }
 
     @GetMapping("bug/{id}")
     public ModelAndView getBug(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("bug");
+        ModelAndView modelAndView = new ModelAndView("/bug/bug");
         modelAndView.addObject("bug", bugService.getBug(id));
         return modelAndView;
     }
 
     @GetMapping("bug/create")
     public ModelAndView createBug() {
-        ModelAndView modelAndView = new ModelAndView("create-bug");
+        ModelAndView modelAndView = new ModelAndView("/bug/create-bug");
         List<TeamDto> teams = teamService.getTeamDtoByUser(SecurityUtil.getCurrentUser());
         modelAndView.addObject("teams", teams);
         modelAndView.addObject("bug", new BugDto());
@@ -55,7 +55,7 @@ public class BugController {
 
     @GetMapping("bug/{id}/assign-user")
     public ModelAndView assignUserToBug(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("assign-user-to-bug");
+        ModelAndView modelAndView = new ModelAndView("/assign/assign-user-to-bug");
         modelAndView.addObject("users", bugService.assignUser(id));
         modelAndView.addObject("bug", bugService.getBugDto(id));
         return modelAndView;
@@ -70,14 +70,14 @@ public class BugController {
 
     @GetMapping("/bugs/assigned-to-me")
     public ModelAndView assignedToMe() {
-        ModelAndView modelAndView = new ModelAndView("assigned-to-me");
+        ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
         modelAndView.addObject("bugs", bugService.assignedToMe());
         return modelAndView;
     }
 
     @GetMapping("/bug/{id}/assigned/details")
     public ModelAndView assignedDetails(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("assigned-bug-details");
+        ModelAndView modelAndView = new ModelAndView("/assign/assigned-bug-details");
         modelAndView.addObject("bug", bugService.getAssignedBug(id));
         return modelAndView;
     }
@@ -91,7 +91,7 @@ public class BugController {
 
     @GetMapping("bug/{id}/edit")
     public ModelAndView editBug(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("edit-bug");
+        ModelAndView modelAndView = new ModelAndView("/bug/edit-bug");
         List<TeamDto> teams = teamService.getTeamDtoByUser(SecurityUtil.getCurrentUser());
         modelAndView.addObject("teams", teams);
         modelAndView.addObject("bug", bugService.getBug(id));
