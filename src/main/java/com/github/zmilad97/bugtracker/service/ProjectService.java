@@ -76,6 +76,18 @@ public class ProjectService {
         }
     }
 
+    public List<ProjectDto> getProjectDtosCreatedByUser(User user) {
+        List<Project> projects = getProjectCreatedByUser(user);
+        List<ProjectDto> projectDtoList = new ArrayList<>();
+
+        projects.forEach(project -> {
+            ProjectDto projectDto = getDtoById(project.getId());
+            projectDtoList.add(projectDto);
+        });
+
+        return projectDtoList;
+    }
+
     public List<Project> getProjectCreatedByUser(User user) {
         return projectRepository.getAllByCreator(user);
     }
