@@ -81,10 +81,10 @@ public class BugController {
         return modelAndView;
     }
 
-    @GetMapping("/bugs/project/{id}")
-    public ModelAndView projectBugs(@PathVariable int id) {
+    @GetMapping("/bugs/project/{projectId}")
+    public ModelAndView projectBugs( @PathVariable int projectId) {
         ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
-        modelAndView.addObject("bugs", bugService.getBugDtosByProjectId(id));
+        modelAndView.addObject("bugs", bugService.getBugDtosByProjectId(projectId));
         return modelAndView;
     }
 
