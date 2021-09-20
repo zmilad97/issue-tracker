@@ -114,7 +114,7 @@ public class BugService {
         Bug bug = bugRepository.findBugById(bugId);
         if (bug != null && bug.getCreator().equals(SecurityUtil.getCurrentUser())) {
             User user = userRepository.findUserById(userId);
-            if (user != null) {
+            if (user != null && bug.getTeam().getMembers().contains(user)) {
                 List<Team> usersTeam = teamService.getUserTeams(user.getId());
                 if (usersTeam.contains(bug.getTeam())) {
                     bug.setAssigned(user);
