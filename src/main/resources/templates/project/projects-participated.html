@@ -88,11 +88,8 @@
                                                         th:text="${project.getTeamName()}"></td>
 
                                                     <td>
-                                                        <a th:href="@{'/project/{id}/edit' (id=${project.getId})}"
-                                                           class="btn btn-warning" th:text="'Edit'"></a>
-                                                        <a th:href="@{'/project/{id}/delete' (id=${project.getId})}"
-                                                           class="btn-transition btn btn-outline-danger"
-                                                           th:text="'Delete'"></a>
+                                                        <a th:href="@{'/bug/project/{id}' (id=${project.getId})}"
+                                                           class="btn btn-info" th:text="'Show Bugs'"></a>
                                                     </td>
                                                 </tr>
                                                 </tbody>

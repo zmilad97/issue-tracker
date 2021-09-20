@@ -36,6 +36,13 @@ public class BugController {
         return modelAndView;
     }
 
+    @GetMapping("/bugs/project/{projectId}")
+    public ModelAndView projectBugs(@PathVariable int projectId) {
+        ModelAndView modelAndView = new ModelAndView("/bug/project-bugs");
+        modelAndView.addObject("bugs", bugService.getBugDtosByProjectId(projectId));
+        return modelAndView;
+    }
+
     @GetMapping("bug/{id}")
     public ModelAndView getBug(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("/bug/bug");
@@ -81,12 +88,7 @@ public class BugController {
         return modelAndView;
     }
 
-    @GetMapping("/bugs/project/{projectId}")
-    public ModelAndView projectBugs( @PathVariable int projectId) {
-        ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
-        modelAndView.addObject("bugs", bugService.getBugDtosByProjectId(projectId));
-        return modelAndView;
-    }
+
 
 
     @PostMapping("bug/save")

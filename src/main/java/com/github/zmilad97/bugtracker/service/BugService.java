@@ -33,8 +33,14 @@ public class BugService {
     }
 
 
-    public List<Bug> retrieveBugs() {
-        return bugRepository.findBugByCreatorEquals(SecurityUtil.getCurrentUser());
+    public List<BugDto> retrieveBugs() {
+        List<Bug> bugs = bugRepository.findBugByCreatorEquals(SecurityUtil.getCurrentUser());
+        List<BugDto> bugDtos = new ArrayList<>();
+        bugs.forEach(bug -> {
+            BugDto bugDto = getBugDto(bug.getId());
+            bugDtos.add(bugDto);
+        });
+        return bugDtos;
     }
 
     public Bug getBug(int id) {
