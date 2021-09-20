@@ -2,7 +2,6 @@ package com.github.zmilad97.bugtracker.controller;
 
 import com.github.zmilad97.bugtracker.dtos.BugDto;
 import com.github.zmilad97.bugtracker.dtos.ProjectDto;
-import com.github.zmilad97.bugtracker.dtos.TeamDto;
 import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import com.github.zmilad97.bugtracker.service.BugService;
 import com.github.zmilad97.bugtracker.service.ProjectService;
@@ -22,15 +21,11 @@ import java.util.List;
 @Controller
 public class BugController {
     private final BugService bugService;
-    private final TeamService teamService;
-    private final UserService userService;
     private final ProjectService projectService;
 
     @Autowired
-    public BugController(BugService bugService, TeamService teamService, UserService userService, ProjectService projectService) {
+    public BugController(BugService bugService, ProjectService projectService) {
         this.bugService = bugService;
-        this.teamService = teamService;
-        this.userService = userService;
         this.projectService = projectService;
     }
 
@@ -103,8 +98,8 @@ public class BugController {
     @GetMapping("bug/{id}/edit")
     public ModelAndView editBug(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("/bug/edit-bug");
-        List<TeamDto> teams = teamService.getTeamDtoByUser(SecurityUtil.getCurrentUser());
-        modelAndView.addObject("teams", teams);
+        List<ProjectDto> projects = projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser());
+        modelAndView.addObject("projects", projects);
         modelAndView.addObject("bug", bugService.getBug(id));
 
         return modelAndView;
