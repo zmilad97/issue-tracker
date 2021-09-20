@@ -127,8 +127,8 @@ public class BugService {
     public List<UserDto> assignUser(int id) {
         Bug bug = bugRepository.findBugById(id);
         List<UserDto> userDtos = new ArrayList<>();
-        if (bug != null && bug.getTeam() != null) {
-            Set<User> users = teamService.getTeamById(bug.getTeam().getId()).getMembers();
+        if (bug != null && bug.getTeam() != null && bug.getProject() != null) {
+            Set<User> users = bug.getProject().getTeam().getMembers();
             users.forEach(user -> {
                 UserDto userDto = new UserDto();
                 userDto.setId(user.getId());
