@@ -1,10 +1,5 @@
 package com.github.zmilad97.bugtracker.dtos;
 
-import com.github.zmilad97.bugtracker.repository.UserRepository;
-import com.github.zmilad97.bugtracker.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Set;
 
 public class BugDto {
     private int id;
@@ -20,6 +15,8 @@ public class BugDto {
     private String teamName;
     private String assignedName;
     private String creatorName;
+    private int projectId;
+    private String projectName;
 
     public String getCreatorName() {
         return creatorName;
@@ -124,4 +121,21 @@ public class BugDto {
     public void setAssignedName(String assignedName) {
         this.assignedName = assignedName;
     }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
 }

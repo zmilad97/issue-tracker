@@ -132,19 +132,19 @@
                                            th:text="${error}">Validation error</p>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="position-relative form-group">
-                                                <label for="team">Team </label>
-                                                <select name="team" id="team"
+                                                <label for="project">Project </label>
+                                                <select name="project" id="project"
                                                         class="custom-select"
-                                                        th:field="*{team}">
-                                                    <option value="-1">......Select Team......</option>
-                                                    <option th:each="team : ${teams}"
-                                                            th:value="${team.getId()}"
-                                                            th:text="${team.getTitle()}">
+                                                        th:field="*{projectId}">
+                                                    <option value="-1">......Select Project......</option>
+                                                    <option th:each="project : ${projects}"
+                                                            th:value="${project.getId()}"
+                                                            th:text="'Project : ' + ${project.getTitle()} + ' In Team : ' + ${project.getTeamName()}">
                                                     </option>
                                                 </select>
-                                                <p th:each="error: ${#fields.errors('team')}"
+                                                <p th:each="error: ${#fields.errors('project')}"
                                                    th:text="${error}">Validation error</p>
                                             </div>
                                         </div>

@@ -1,6 +1,8 @@
 package com.github.zmilad97.bugtracker.repository;
 
 import com.github.zmilad97.bugtracker.model.Bug;
+import com.github.zmilad97.bugtracker.model.Project;
+import com.github.zmilad97.bugtracker.model.Team;
 import com.github.zmilad97.bugtracker.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +16,8 @@ public interface BugRepository extends JpaRepository<Bug, Integer> {
     List<Bug> findBugByCreatorEquals(User user);
 
     List<Bug> findBugsByAssigned(User user);
+
+    List<Bug> findBugsByTeam(Team team);
+
+    List<Bug> findBugsByProject(Project project);
 }

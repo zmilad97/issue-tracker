@@ -3,6 +3,7 @@ package com.github.zmilad97.bugtracker.service;
 import com.github.zmilad97.bugtracker.dtos.BugDto;
 import com.github.zmilad97.bugtracker.dtos.UserDto;
 import com.github.zmilad97.bugtracker.model.Bug;
+import com.github.zmilad97.bugtracker.model.Project;
 import com.github.zmilad97.bugtracker.model.Team;
 import com.github.zmilad97.bugtracker.model.User;
 import com.github.zmilad97.bugtracker.repository.BugRepository;
@@ -21,12 +22,14 @@ public class BugService {
     private final BugRepository bugRepository;
     private final UserRepository userRepository;
     private final TeamService teamService;
+    private final ProjectService projectService;
 
     @Autowired
-    public BugService(BugRepository bugRepository, UserRepository userRepository, TeamService teamService) {
+    public BugService(BugRepository bugRepository, UserRepository userRepository, TeamService teamService, ProjectService projectService) {
         this.bugRepository = bugRepository;
         this.userRepository = userRepository;
         this.teamService = teamService;
+        this.projectService = projectService;
     }
 
 
@@ -45,7 +48,6 @@ public class BugService {
 
     public void save(BugDto bugDto) {
         Bug bug = new Bug();
-        bug.setTeam(teamService.getTeamById(bugDto.getTeam()));
         bug.setCreatedAt(LocalDateTime.now().toString());
         bug.setSteps(bugDto.getSteps());
         bug.setDescription(bugDto.getDescription());
@@ -54,6 +56,10 @@ public class BugService {
         bug.setAssigned(userRepository.findUserById(bugDto.getAssignedId()));
         bug.setCreator(SecurityUtil.getCurrentUser());
         bug.setPriority(bugDto.getPriority());
+        if (bugDto.getProjectId() != -1) {
+            bug.setProject(projectService.getProjectById(bugDto.getProjectId()));
+            bug.setTeam(bug.getProject().getTeam());
+        }
         bugRepository.save(bug);
     }
 
@@ -91,15 +97,7 @@ public class BugService {
     public void update(BugDto bugDto) {
         Bug bug = bugRepository.findBugById(bugDto.getId());
         if (bug != null && bug.getCreator().equals(SecurityUtil.getCurrentUser())) {
-            bug.setSteps(bugDto.getSteps());
-            bug.setDescription(bugDto.getDescription());
-            bug.setVersion(bugDto.getVersion());
-            bug.setTitle(bugDto.getTitle());
-            bug.setAssigned(userRepository.findUserById(bugDto.getAssignedId()));
-            bug.setTeam(teamService.getTeamById(bugDto.getTeam()));
-            bug.setCreator(SecurityUtil.getCurrentUser());
-            bug.setPriority(bugDto.getPriority());
-            bugRepository.save(bug);
+            save(bugDto);
         }
     }
 
@@ -166,4 +164,20 @@ public class BugService {
         else
             return new BugDto();
     }
+
+    public List<BugDto> getBugDtosByProjectId(int id) {
+        List<BugDto> bugDtos = new ArrayList<>();
+        Project project = projectService.getProjectById(id);
+        User user = SecurityUtil.getCurrentUser();
+        if (project.getTeam().getMembers().contains(user)) {
+            List<Bug> bugs = bugRepository.findBugsByProject(project);
+            bugs.forEach(bug -> {
+                BugDto bugDto = getBugDto(bug.getId());
+                bugDtos.add(bugDto);
+            });
+        }
+        return bugDtos;
+    }
+
+
 }

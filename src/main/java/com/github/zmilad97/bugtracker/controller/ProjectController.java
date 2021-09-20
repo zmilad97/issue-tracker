@@ -3,6 +3,7 @@ package com.github.zmilad97.bugtracker.controller;
 import com.github.zmilad97.bugtracker.dtos.ProjectDto;
 import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import com.github.zmilad97.bugtracker.service.ProjectService;
+import com.github.zmilad97.bugtracker.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,12 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class ProjectController {
     private final ProjectService projectService;
+    private final TeamService teamService;
 
     @Autowired
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, TeamService teamService) {
         this.projectService = projectService;
+        this.teamService = teamService;
     }
 
     @GetMapping("/projects")
@@ -33,6 +36,7 @@ public class ProjectController {
     public ModelAndView addProject() {
         ModelAndView modelAndView = new ModelAndView("/project/create-project");
         modelAndView.addObject("project", new ProjectDto());
+        modelAndView.addObject("teams", teamService.getTeamDtoByUser(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -46,6 +50,7 @@ public class ProjectController {
     public ModelAndView editProject(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("/project/edit-project");
         modelAndView.addObject("project", projectService.getDtoById(id));
+        modelAndView.addObject("teams", teamService.getTeamDtoByUser(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -59,7 +64,7 @@ public class ProjectController {
     public ModelAndView myProjects() {
         ModelAndView modelAndView = new ModelAndView("/project/projects-participated");
         modelAndView.addObject("projects",
-                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
+                projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 

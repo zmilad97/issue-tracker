@@ -92,11 +92,17 @@ public class ProjectService {
         return projectRepository.getAllByCreator(user);
     }
 
-    public List<Project> getProjectByUserParticipated(User user) {
+    public List<ProjectDto> getProjectDtoByUserParticipated(User user) {
         List<Team> teams = teamService.getUserTeams(user.getId());
         List<Project> projects = new ArrayList<>();
+        List<ProjectDto> projectDtoList = new ArrayList<>();
         teams.forEach(v -> projects.addAll(projectRepository.getProjectsByTeam(v)));
-        return projects;
+        projects.forEach(project -> projectDtoList.add(getDtoById(project.getId())));
+        return projectDtoList;
+    }
+
+    public Project getProjectById(int id) {
+        return projectRepository.getProjectById(id);
     }
 
 

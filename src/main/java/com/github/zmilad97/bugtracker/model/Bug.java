@@ -21,6 +21,8 @@ public class Bug {
     private User creator;
     @ManyToOne
     private Team team;
+    @ManyToOne
+    private Project project;
 
 
     private String createdAt;
@@ -105,4 +107,13 @@ public class Bug {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
 }
