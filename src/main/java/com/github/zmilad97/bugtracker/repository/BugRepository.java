@@ -20,4 +20,8 @@ public interface BugRepository extends JpaRepository<Bug, Integer> {
     List<Bug> findBugsByTeam(Team team);
 
     List<Bug> findBugsByProject(Project project);
+
+    List<Bug> findBugsByProjectAndPriorityAndCompleted(Project project, int priority, boolean isCompleted);
+
+    List<Bug> findBugsByProjectAndPriority(Project project, int priority);
 }
