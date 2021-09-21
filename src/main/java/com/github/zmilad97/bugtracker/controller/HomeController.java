@@ -4,6 +4,7 @@ import com.github.zmilad97.bugtracker.dtos.UserDto;
 import com.github.zmilad97.bugtracker.exception.UserAlreadyExistException;
 import com.github.zmilad97.bugtracker.model.User;
 import com.github.zmilad97.bugtracker.security.SecurityUtil;
+import com.github.zmilad97.bugtracker.service.HomeService;
 import com.github.zmilad97.bugtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,11 @@ import javax.validation.Valid;
 @Controller
 public class HomeController {
     private final UserService userService;
-
+    private final HomeService homeService;
     @Autowired
-    public HomeController(UserService userService) {
+    public HomeController(UserService userService, HomeService homeService) {
         this.userService = userService;
+        this.homeService = homeService;
     }
 
     @GetMapping("/")
@@ -41,14 +43,15 @@ public class HomeController {
 
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
-        return new ModelAndView("/home/dashboard");
+        ModelAndView modelAndView = new ModelAndView("/home/dashboard");
+        modelAndView.addObject("statistics" , homeService.getStatistics());
+        return modelAndView;
     }
 
     @GetMapping("/signup")
     public ModelAndView signup() {
         ModelAndView modelAndView = new ModelAndView("/home/signup");
-        UserDto userDto = new UserDto();
-        modelAndView.addObject("user", userDto);
+        modelAndView.addObject("user", new UserDto());
         return modelAndView;
     }
 
