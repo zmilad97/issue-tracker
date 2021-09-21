@@ -7,6 +7,7 @@ import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,18 +26,19 @@ public class HomeService {
     }
 
 
-    public Map<String, Integer[]> getStatistics() {
+    public Map<String, List<Integer>> getStatistics() {
         User user = SecurityUtil.getCurrentUser();
-        Map<String, Integer[]> statistics = new HashMap<>();
+        Map<String, List<Integer>> statistics = new HashMap<>();
+
         List<Project> projects = projectService.getProjectByUserParticipated(user);
         projects.forEach(project -> {
-            Integer[] stats = new Integer[6];
-            for (int i = 0; i < 6; i++) {
-                int all = bugRepository.findBugsByProjectAndPriority(project, 1).size();
-                stats[i] = all;
-                i++;
-                int completed = bugRepository.findBugsByProjectAndPriorityAndCompleted(project, 1, true).size();
-                stats[i] = completed;
+            List<Integer> stats = new ArrayList<>();
+
+            for (int i = 0; i < 3; i++) {
+                int all = bugRepository.findBugsByProjectAndPriority(project, i).size();
+                stats.add(all);
+                int completed = bugRepository.findBugsByProjectAndPriorityAndCompletedIsTrue(project, i).size();
+                stats.add(completed);
             }
             statistics.put(project.getTitle(), stats);
         });
