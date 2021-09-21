@@ -17,6 +17,7 @@ public class BugDto {
     private String creatorName;
     private int projectId;
     private String projectName;
+    private boolean isCompleted;
 
     public String getCreatorName() {
         return creatorName;
@@ -138,4 +139,11 @@ public class BugDto {
         this.projectName = projectName;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
 }

@@ -23,10 +23,8 @@ public class Bug {
     private Team team;
     @ManyToOne
     private Project project;
-
-
     private String createdAt;
-
+    private boolean isCompleted;
 
     public int getId() {
         return id;
@@ -116,4 +114,11 @@ public class Bug {
         this.project = project;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
 }
