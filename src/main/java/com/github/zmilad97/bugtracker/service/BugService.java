@@ -173,17 +173,21 @@ public class BugService {
 
     public List<BugDto> getBugDtosByProjectId(int id) {
         List<BugDto> bugDtos = new ArrayList<>();
-        Project project = projectService.getProjectById(id);
-        User user = SecurityUtil.getCurrentUser();
-        if (project.getTeam().getMembers().contains(user)) {
-            List<Bug> bugs = bugRepository.findBugsByProject(project);
+            List<Bug> bugs = getBugsByProjectId(id);
             bugs.forEach(bug -> {
                 BugDto bugDto = getBugDto(bug.getId());
                 bugDtos.add(bugDto);
             });
-        }
         return bugDtos;
     }
 
 
+    public List<Bug> getBugsByProjectId(int id) {
+        Project project = projectService.getProjectById(id);
+        User user = SecurityUtil.getCurrentUser();
+        if (project.getTeam().getMembers().contains(user)) {
+            return bugRepository.findBugsByProject(project);
+        }
+        return new ArrayList<>();
+    }
 }
