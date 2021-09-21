@@ -58,12 +58,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="page-title-actions">
-                            <div class="pull-right ml-auto">
-                                <a class="btn btn-shadow btn-success pull-right ml-auto" th:text="'Create Team'"
-                                   th:href="@{/team/create}"></a>
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>
@@ -81,7 +76,6 @@
                                                     <th>#</th>
                                                     <th>Title</th>
                                                     <th>Description</th>
-                                                    <th>Action</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody th:each="team: ${teams}">
@@ -89,13 +83,7 @@
                                                     <th th:text="${teams.indexOf(team)+1}"></th>
                                                     <td th:text="${team.title}"></td>
                                                     <td th:text="${team.description}"></td>
-                                                    <td>
-                                                        <a th:href="@{'/team/{id}/edit' (id=${team.getId})}"
-                                                           class="btn btn-warning" th:text="'Edit'"></a>
-                                                        <a th:href="@{'/team/{id}/delete' (id=${team.getId})}"
-                                                           class="btn-transition btn btn-outline-danger"
-                                                           th:text="'Delete'"></a>
-                                                    </td>
+
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -105,7 +93,7 @@
                                     <div th:unless="${teams.size()>0}">
                                         <div class="col-md-12">
                                             <div class="card-body">
-                                                No team yet, You can use top button to create one
+                                                No team yet,
 
                                             </div>
                                         </div>

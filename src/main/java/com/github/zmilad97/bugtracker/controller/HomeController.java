@@ -5,6 +5,7 @@ import com.github.zmilad97.bugtracker.exception.UserAlreadyExistException;
 import com.github.zmilad97.bugtracker.model.User;
 import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import com.github.zmilad97.bugtracker.service.HomeService;
+import com.github.zmilad97.bugtracker.service.ProjectService;
 import com.github.zmilad97.bugtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,13 @@ import javax.validation.Valid;
 public class HomeController {
     private final UserService userService;
     private final HomeService homeService;
+    private final ProjectService projectService;
+
     @Autowired
-    public HomeController(UserService userService, HomeService homeService) {
+    public HomeController(UserService userService, HomeService homeService, ProjectService projectService) {
         this.userService = userService;
         this.homeService = homeService;
+        this.projectService = projectService;
     }
 
     @GetMapping("/")
@@ -44,7 +48,9 @@ public class HomeController {
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
         ModelAndView modelAndView = new ModelAndView("/home/dashboard");
-        modelAndView.addObject("statistics" , homeService.getStatistics());
+        modelAndView.addObject("statistics", homeService.getStatistics());
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 

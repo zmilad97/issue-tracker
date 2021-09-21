@@ -29,6 +29,8 @@ public class ProjectController {
         ModelAndView modelAndView = new ModelAndView("/project/projects");
         modelAndView.addObject("projects",
                 projectService.getProjectDtosCreatedByUser(SecurityUtil.getCurrentUser()));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -37,6 +39,8 @@ public class ProjectController {
         ModelAndView modelAndView = new ModelAndView("/project/create-project");
         modelAndView.addObject("project", new ProjectDto());
         modelAndView.addObject("teams", teamService.getTeamDtoByUser(SecurityUtil.getCurrentUser()));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -51,6 +55,8 @@ public class ProjectController {
         ModelAndView modelAndView = new ModelAndView("/project/edit-project");
         modelAndView.addObject("project", projectService.getDtoById(id));
         modelAndView.addObject("teams", teamService.getTeamDtoByUser(SecurityUtil.getCurrentUser()));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -65,6 +71,8 @@ public class ProjectController {
         ModelAndView modelAndView = new ModelAndView("/project/projects-participated");
         modelAndView.addObject("projects",
                 projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser()));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -72,6 +80,8 @@ public class ProjectController {
     public ModelAndView projectDetails(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("/project/project-details");
         modelAndView.addObject("project", projectService.getDtoById(id));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 

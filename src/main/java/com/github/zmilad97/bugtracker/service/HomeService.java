@@ -33,13 +33,13 @@ public class HomeService {
         List<Project> projects = projectService.getProjectByUserParticipated(user);
         projects.forEach(project -> {
             List<Integer> stats = new ArrayList<>();
-
             for (int i = 0; i < 3; i++) {
-                int all = bugRepository.findBugsByProjectAndPriority(project, i).size();
+                int all = bugRepository.findBugsByProjectAndPriority(project, i+1).size();
                 stats.add(all);
-                int completed = bugRepository.findBugsByProjectAndPriorityAndCompletedIsTrue(project, i).size();
+                int completed = bugRepository.findBugsByProjectAndPriorityAndCompletedIsTrue(project, i+1).size();
                 stats.add(completed);
             }
+
             statistics.put(project.getTitle(), stats);
         });
         return statistics;

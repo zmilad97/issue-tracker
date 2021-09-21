@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/dashboard").permitAll() //TODO:fix it later
+                .antMatchers("/dashboard").authenticated() //TODO:fix it later
 //                .antMatchers("/api/work/**").hasAnyRole("ADMIN", "OWNER")
 //                .antMatchers("/api/schedule/**").hasAnyRole("ADMIN", "OWNER")
 //                .antMatchers("/api/reserve/work/*").hasAnyRole("ADMIN")

@@ -33,6 +33,8 @@ public class BugController {
     public ModelAndView bugs() {
         ModelAndView modelAndView = new ModelAndView("/bug/bugs");
         modelAndView.addObject("bugs", bugService.retrieveBugs());
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -41,6 +43,8 @@ public class BugController {
         ModelAndView modelAndView = new ModelAndView("/bug/project-bugs");
         modelAndView.addObject("bugs", bugService.getBugDtosByProjectId(projectId));
         modelAndView.addObject("project", projectService.getDtoById(projectId));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -48,6 +52,8 @@ public class BugController {
     public ModelAndView getBug(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("/bug/bug");
         modelAndView.addObject("bug", bugService.getBug(id));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -57,6 +63,8 @@ public class BugController {
         List<ProjectDto> projects = projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser());
         modelAndView.addObject("projects", projects);
         modelAndView.addObject("bug", new BugDto());
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -65,6 +73,8 @@ public class BugController {
         ModelAndView modelAndView = new ModelAndView("/assign/assign-user-to-bug");
         modelAndView.addObject("users", bugService.assignUser(id));
         modelAndView.addObject("bug", bugService.getBugDto(id));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -79,6 +89,8 @@ public class BugController {
     public ModelAndView assignedToMe() {
         ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
         modelAndView.addObject("bugs", bugService.assignedToMe());
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -86,6 +98,8 @@ public class BugController {
     public ModelAndView assignedDetails(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("/assign/assigned-bug-details");
         modelAndView.addObject("bug", bugService.getAssignedBug(id));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -102,7 +116,8 @@ public class BugController {
         List<ProjectDto> projects = projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser());
         modelAndView.addObject("projects", projects);
         modelAndView.addObject("bug", bugService.getBug(id));
-
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
     }
 
@@ -120,7 +135,7 @@ public class BugController {
     }
 
     @GetMapping("/bug/{id}/completed")
-    public ModelAndView markCompleted(@PathVariable String id) {
+    public ModelAndView markCompleted(@PathVariable int id) {
         return null;
     }
 }
