@@ -39,10 +39,10 @@ public class HomeController {
         return "/home/login";
     }
 
-//    @GetMapping("/dashboard")
-//    public ModelAndView dashboard() {
-//        return new ModelAndView("/dashboard/index");
-//    }
+    @GetMapping("/dashboard")
+    public ModelAndView dashboard() {
+        return new ModelAndView("/home/dashboard");
+    }
 
     @GetMapping("/signup")
     public ModelAndView signup() {

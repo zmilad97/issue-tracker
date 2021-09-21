@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
 <head>
     <div th:replace="fragments/head :: #header"></div>
-    <title>All Bugs</title>
+    <title th:title="'Project '+${project.getTitle()}+  ' Bugs'"></title>
 </head>
 <body>
 

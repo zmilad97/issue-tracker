@@ -40,6 +40,7 @@ public class BugController {
     public ModelAndView projectBugs(@PathVariable int projectId) {
         ModelAndView modelAndView = new ModelAndView("/bug/project-bugs");
         modelAndView.addObject("bugs", bugService.getBugDtosByProjectId(projectId));
+        modelAndView.addObject("project", projectService.getDtoById(projectId));
         return modelAndView;
     }
 
@@ -87,8 +88,6 @@ public class BugController {
         modelAndView.addObject("bug", bugService.getAssignedBug(id));
         return modelAndView;
     }
-
-
 
 
     @PostMapping("bug/save")
