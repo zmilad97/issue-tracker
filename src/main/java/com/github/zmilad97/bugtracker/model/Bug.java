@@ -24,7 +24,7 @@ public class Bug {
     @ManyToOne
     private Project project;
     private String createdAt;
-    private boolean isCompleted;
+    private boolean completed;
 
     public int getId() {
         return id;
@@ -115,10 +115,10 @@ public class Bug {
     }
 
     public boolean isCompleted() {
-        return isCompleted;
+        return completed;
     }
 
     public void setCompleted(boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 }
