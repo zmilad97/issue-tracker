@@ -85,6 +85,11 @@ public class BugService {
             bugDto.setCreatorName(bug.getCreator().getFirstName() + " " + bug.getCreator().getLastName());
             bugDto.setCreatorId(bug.getCreator().getId());
         }
+        if (bug.getProject() != null) {
+            bugDto.setProjectId(bug.getProject().getId());
+            bugDto.setProjectName(bug.getProject().getTitle());
+
+        }
         bugDto.setSteps(bug.getSteps());
         bugDto.setVersion(bug.getVersion());
 
@@ -96,7 +101,7 @@ public class BugService {
             bugDto.setAssignedName(bug.getAssigned().getFirstName() + " " + bug.getAssigned().getLastName());
         else
             bugDto.setAssignedName("No One");
-
+        bugDto.setCompleted(bug.isCompleted());
         return bugDto;
     }
 
@@ -173,11 +178,11 @@ public class BugService {
 
     public List<BugDto> getBugDtosByProjectId(int id) {
         List<BugDto> bugDtos = new ArrayList<>();
-            List<Bug> bugs = getBugsByProjectId(id);
-            bugs.forEach(bug -> {
-                BugDto bugDto = getBugDto(bug.getId());
-                bugDtos.add(bugDto);
-            });
+        List<Bug> bugs = getBugsByProjectId(id);
+        bugs.forEach(bug -> {
+            BugDto bugDto = getBugDto(bug.getId());
+            bugDtos.add(bugDto);
+        });
         return bugDtos;
     }
 
@@ -189,5 +194,13 @@ public class BugService {
             return bugRepository.findBugsByProject(project);
         }
         return new ArrayList<>();
+    }
+
+    public void complete(int id, String condition) {
+        Bug bug = bugRepository.findBugById(id);
+        if (bug.getCreator().equals(SecurityUtil.getCurrentUser()) || bug.getAssigned().equals(SecurityUtil.getCurrentUser())) {
+            bug.setCompleted(condition.equals("true"));
+            bugRepository.save(bug);
+        }
     }
 }
