@@ -134,8 +134,9 @@ public class BugController {
         return new RedirectView("/bugs");
     }
 
-    @GetMapping("/bug/{id}/completed")
-    public ModelAndView markCompleted(@PathVariable int id) {
-        return null;
+    @GetMapping("/bug/{id}/completed/{condition}")
+    public RedirectView markCompleted(@PathVariable int id, @PathVariable String condition) {
+        bugService.complete(id,condition);
+        return new RedirectView("/bugs/assigned-to-me");
     }
 }
