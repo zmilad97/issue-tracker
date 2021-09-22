@@ -72,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/team/**").authenticated()
                 .antMatchers("/bugs/**").authenticated()
                 .antMatchers("/bug/**").authenticated()
-                .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/").failureUrl("/error")
+                .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/dashboard").failureUrl("/error")
                 .and().logout().invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
