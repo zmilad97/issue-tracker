@@ -135,6 +135,16 @@ public class BugService {
         }
     }
 
+
+    public void assignToMe(int bugId) {
+        Bug bug = bugRepository.findBugById(bugId);
+        if (bug != null && bug.getAssigned() == null) {
+            bug.setAssigned(SecurityUtil.getCurrentUser());
+            bugRepository.save(bug);
+        }
+    }
+
+
     public List<UserDto> assignUser(int id) {
         Bug bug = bugRepository.findBugById(id);
         List<UserDto> userDtos = new ArrayList<>();
