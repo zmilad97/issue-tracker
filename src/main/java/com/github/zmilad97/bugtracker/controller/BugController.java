@@ -5,7 +5,6 @@ import com.github.zmilad97.bugtracker.dtos.ProjectDto;
 import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import com.github.zmilad97.bugtracker.service.BugService;
 import com.github.zmilad97.bugtracker.service.ProjectService;
-import com.github.zmilad97.bugtracker.service.TeamService;
 import com.github.zmilad97.bugtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +21,13 @@ import java.util.List;
 public class BugController {
     private final BugService bugService;
     private final ProjectService projectService;
+    private final UserService userService;
 
     @Autowired
-    public BugController(BugService bugService, ProjectService projectService) {
+    public BugController(BugService bugService, ProjectService projectService, UserService userService) {
         this.bugService = bugService;
         this.projectService = projectService;
+        this.userService = userService;
     }
 
     @GetMapping("/bugs")
@@ -43,6 +44,16 @@ public class BugController {
         ModelAndView modelAndView = new ModelAndView("/bug/project-bugs");
         modelAndView.addObject("bugs", bugService.getBugDtosByProjectId(projectId));
         modelAndView.addObject("project", projectService.getDtoById(projectId));
+        modelAndView.addObject("user", userService.getUserDtoByUser(SecurityUtil.getCurrentUser()));
+        modelAndView.addObject("sideBarProjects",
+                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
+        return modelAndView;
+    }
+
+    @GetMapping("/bugs/assigned-to-me")
+    public ModelAndView assignedToMe() {
+        ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
+        modelAndView.addObject("bugs", bugService.assignedToMe());
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
@@ -84,15 +95,13 @@ public class BugController {
         return new RedirectView("/bugs");
     }
 
-
-    @GetMapping("/bugs/assigned-to-me")
-    public ModelAndView assignedToMe() {
-        ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
-        modelAndView.addObject("bugs", bugService.assignedToMe());
-        modelAndView.addObject("sideBarProjects",
-                projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
-        return modelAndView;
+    @GetMapping("bug/{id}/assign-to-me")
+    public RedirectView assignToMe(@PathVariable int id) {
+        bugService.assignToMe(id);
+        int pid = bugService.getBug(id).getProject().getId();
+        return new RedirectView("/bugs/project/" + pid);
     }
+
 
     @GetMapping("/bug/{id}/assigned/details")
     public ModelAndView assignedDetails(@PathVariable int id) {
@@ -136,7 +145,7 @@ public class BugController {
 
     @GetMapping("/bug/{id}/completed/{condition}")
     public RedirectView markCompleted(@PathVariable int id, @PathVariable String condition) {
-        bugService.complete(id,condition);
+        bugService.complete(id, condition);
         return new RedirectView("/bugs/assigned-to-me");
     }
 }
