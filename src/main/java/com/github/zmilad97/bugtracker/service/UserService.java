@@ -57,6 +57,17 @@ public class UserService {
         return userDtos;
     }
 
+
+    public UserDto getUserDtoByUser(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
+        userDto.setFirstName(user.getLastName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        return userDto;
+    }
+
     private boolean emailExist(String email) {
         return userRepository.findByEmail(email) != null;
     }
