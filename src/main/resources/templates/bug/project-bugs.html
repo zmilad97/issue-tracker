@@ -53,8 +53,9 @@
                                 <i class="fa fa-fw icon-gradient bg-arielle-smile">
                                 </i>
                             </div>
-                            <div>Bugs
-                                <div class="page-title-subheading"> You can see all bugs here
+                            <div>Project Bugs
+                                <div class="page-title-subheading"
+                                     th:text="'You can see bugs of project : '+${project.getTitle()} +' here'">
                                 </div>
                             </div>
                         </div>
@@ -70,15 +71,71 @@
                 <div class="tab-content">
                     <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
                         <div class="row">
+
                             <div class="col-md-4">
-                                <div th:each="bug: ${bugs}">
+                                <div th:each="bug: ${bugs}" th:if="${!bug.isCompleted()}">
                                     <div class="mb-3 card text-white bg-danger" th:if="${bug.getPriority()} == 1">
                                         <div class="card-header">
                                             <div th:text="${bug.getTitle()}" class="pull-left"></div>
-                                            <a class="btn btn btn-dark ml-auto pull-right"
+                                            <div th:if="${bug.getAssignedId()}==null" class="ml-auto pull-right">
 
-                                               th:href="@{'/bug/{id}/assign-user'(id=${bug.getId()})}">
-                                                Assign to
+                                                <a
+                                                        class="btn btn btn-dark ml-auto pull-right"
+                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}">
+                                                    <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                    </i> I Take
+                                                </a>
+                                            </div>
+                                            <div th:unless="${bug.getAssignedId()}==null" class="ml-auto pull-right">
+                                                <a th:if="${bug.getAssignedId()}==${user.getId()}"
+                                                   class="btn btn btn-dark disabled ml-auto pull-right"
+                                                >
+                                                    <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                    </i> :You
+                                                </a>
+
+                                                <a th:if=" ${bug.getAssignedId()} != ${user.getId()}"
+                                                   class="btn btn btn-dark disabled ml-auto pull-right"
+                                                >
+                                                    Taken
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div th:text="${bug.getDescription}"></div>
+                                            <br>
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <div th:text="${bug.getSteps}"></div>
+                                            <div class="pull-right ml-auto">
+
+                                                <a class="btn btn btn-info ml-auto pull-right"
+                                                   th:href="@{'/bug/{id}'(id=${bug.getId})}">
+                                                    Details
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div th:each="bug: ${bugs}" th:if="${bug.isCompleted()}">
+                                    <div class="card-shadow-danger border mb-3 card  border-danger text-danger"
+                                         th:if="${bug.getPriority()} == 1">
+                                        <div class="card-header">
+                                            <div th:text="${bug.getTitle()}" class="pull-left"></div>
+
+                                            <a th:if="${bug.getAssignedId()}==${user.getId()}"
+                                               class="btn btn btn-dark disabled ml-auto pull-right"
+                                            >
+                                                <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                </i> :You
+                                            </a>
+
+                                            <a th:if=" ${bug.getAssignedId()} != ${user.getId()}"
+                                               class="btn btn btn-dark disabled ml-auto pull-right"
+                                            >
+                                                Taken
                                             </a>
                                         </div>
                                         <div class="card-body">
@@ -101,26 +158,81 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div th:each="bug: ${bugs}">
+                                <div th:each="bug: ${bugs}" th:if="${!bug.isCompleted()}">
                                     <div class="mb-3 card text-white bg-warning" th:if="${bug.getPriority()} == 2">
                                         <div class="card-header">
-                                            <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                            <a class="btn btn btn-dark ml-auto pull-right"
+                                            <div th:text="${bug.getTitle()}" class="pull-left"></div>
+                                            <div th:if="${bug.getAssignedId()}==null" class="ml-auto pull-right">
 
-                                               th:href="@{'/bug/{id}/assign-user'(id=${bug.getId})}">
-                                                Assign to
-                                            </a>
+                                                <a
+                                                        class="btn btn btn-dark ml-auto pull-right"
+                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}">
+                                                    <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                    </i> I Take
+                                                </a>
+                                            </div>
+                                            <div th:unless="${bug.getAssignedId()}==null" class="ml-auto pull-right">
+                                                <a th:if="${bug.getAssignedId()}==${user.getId()}"
+                                                   class="btn btn btn-dark disabled ml-auto pull-right"
+                                                >
+                                                    <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                    </i> :You
+                                                </a>
+
+                                                <a th:if=" ${bug.getAssignedId()} != ${user.getId()}"
+                                                   class="btn btn btn-dark disabled ml-auto pull-right"
+                                                >
+                                                    Taken
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <div th:text="${bug.getDescription}"></div>
                                             <br>
+
                                         </div>
                                         <div class="card-footer">
                                             <div th:text="${bug.getSteps}"></div>
                                             <div class="pull-right ml-auto">
 
                                                 <a class="btn btn btn-info ml-auto pull-right"
+                                                   th:href="@{'/bug/{id}'(id=${bug.getId})}">
+                                                    Details
+                                                </a>
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                </div>
+                                <div th:each="bug: ${bugs}" th:if="${bug.isCompleted()}">
+                                    <div class="card-shadow-danger border mb-3 card  border-warning text-warning"
+                                         th:if="${bug.getPriority()} == 2">
+                                        <div class="card-header">
+                                            <div th:text="${bug.getTitle()}" class="pull-left"></div>
+
+                                            <a th:if="${bug.getAssignedId()}==${user.getId()}"
+                                               class="btn btn btn-dark disabled ml-auto pull-right"
+                                            >
+                                                <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                </i> :You
+                                            </a>
+
+                                            <a th:if=" ${bug.getAssignedId()} != ${user.getId()}"
+                                               class="btn btn btn-dark disabled ml-auto pull-right"
+                                            >
+                                                Taken
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <div th:text="${bug.getDescription}"></div>
+                                            <br>
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <div th:text="${bug.getSteps}"></div>
+                                            <div class="pull-right ml-auto">
+
+                                                <a class="btn btn btn-info ml-auto pull-right"
                                                    th:href="@{'/bug/{id}'(id=${bug.getId})}">
                                                     Details
                                                 </a>
@@ -131,15 +243,69 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div th:each="bug: ${bugs}">
-
+                                <div th:each="bug: ${bugs}" th:if="${!bug.isCompleted()}">
                                     <div class="mb-3 card text-white bg-alternate" th:if="${bug.getPriority()} == 3">
                                         <div class="card-header">
-                                            <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                            <a class="btn btn btn-dark ml-auto pull-right"
+                                            <div th:text="${bug.getTitle()}" class="pull-left"></div>
+                                            <div th:if="${bug.getAssignedId()}==null" class="ml-auto pull-right">
 
-                                               th:href="@{'/bug/{id}/assign-user'(id=${bug.getId})}">
-                                                Assign to
+                                                <a
+                                                        class="btn btn btn-dark ml-auto pull-right"
+                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}">
+                                                    <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                    </i> I Take
+                                                </a>
+                                            </div>
+                                            <div th:unless="${bug.getAssignedId()}==null" class="ml-auto pull-right">
+                                                <a th:if="${bug.getAssignedId()}==${user.getId()}"
+                                                   class="btn btn btn-dark disabled ml-auto pull-right"
+                                                >
+                                                    <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                    </i> :You
+                                                </a>
+
+                                                <a th:if=" ${bug.getAssignedId()} != ${user.getId()}"
+                                                   class="btn btn btn-dark disabled ml-auto pull-right"
+                                                >
+                                                    Taken
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div th:text="${bug.getDescription}"></div>
+                                            <br>
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <div th:text="${bug.getSteps}"></div>
+                                            <div class="pull-right ml-auto">
+
+                                                <a class="btn btn btn-info ml-auto pull-right"
+                                                   th:href="@{'/bug/{id}'(id=${bug.getId})}">
+                                                    Details
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div th:each="bug: ${bugs}" th:if="${bug.isCompleted()}">
+                                    <div class="card-shadow-danger border mb-3 card  border-alternate text-alternate"
+                                         th:if="${bug.getPriority()} == 3">
+                                        <div class="card-header">
+                                            <div th:text="${bug.getTitle()}" class="pull-left"></div>
+
+                                            <a th:if="${bug.getAssignedId()}==${user.getId()}"
+                                               class="btn btn btn-dark disabled ml-auto pull-right"
+                                            >
+                                                <i class="fa fa-fw icon-gradient bg-arielle-smile">
+                                                </i> :You
+                                            </a>
+
+                                            <a th:if=" ${bug.getAssignedId()} != ${user.getId()}"
+                                               class="btn btn btn-dark disabled ml-auto pull-right"
+                                            >
+                                                Taken
                                             </a>
                                         </div>
                                         <div class="card-body">
@@ -151,9 +317,7 @@
                                             <div th:text="${bug.getSteps}"></div>
                                             <div class="pull-right ml-auto">
 
-
                                                 <a class="btn btn btn-info ml-auto pull-right"
-
                                                    th:href="@{'/bug/{id}'(id=${bug.getId})}">
                                                     Details
                                                 </a>
@@ -163,6 +327,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
