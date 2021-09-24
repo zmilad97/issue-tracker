@@ -33,11 +33,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("/home/index");
-        UserDto userDto = new UserDto();
-        userDto.setFirstName(SecurityUtil.getCurrentUser().getFirstName());
-        modelAndView.addObject("user", userDto);
-        return modelAndView;
+        return new ModelAndView("/home/index");
     }
 
     @GetMapping("login")
