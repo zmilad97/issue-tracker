@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class BugService {
@@ -216,14 +213,15 @@ public class BugService {
         }
     }
 
-    public Set<ProjectDto> getProjectDtoSetFromBugDto(List<BugDto> bugs) {
+    public List<ProjectDto> getProjectDtoSetFromBugDto(List<BugDto> bugs) {
         Set<Project> projects = new HashSet<>();
-        Set<ProjectDto> projectDtos = new HashSet<>();
+        List<ProjectDto> projectDtos = new ArrayList<>();
         bugs.forEach(bugDto -> {
             if (bugDto.getProjectId() != 0)
                 projects.add(projectService.getProjectById(bugDto.getProjectId()));
         });
         projects.forEach(project -> projectDtos.add(projectService.getDtoById(project.getId())));
+        projectDtos.sort(Comparator.comparing(ProjectDto::getId));
         return projectDtos;
     }
 }
