@@ -217,10 +217,14 @@ public class BugService {
     }
 
     public Set<ProjectDto> getProjectDtoSetFromBugDto(List<BugDto> bugs) {
+        Set<Project> projects = new HashSet<>();
         Set<ProjectDto> projectDtos = new HashSet<>();
         bugs.forEach(bugDto -> {
             if (bugDto.getProjectId() != 0)
-                projectDtos.add(projectService.getDtoById(bugDto.getProjectId()));
+                projects.add(projectService.getProjectById(bugDto.getProjectId()));
+        });
+        projects.forEach(project -> {
+            projectDtos.add(projectService.getDtoById(project.getId()));
         });
         return projectDtos;
     }
