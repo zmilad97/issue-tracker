@@ -76,7 +76,7 @@
                                             <div class="card-header">
                                                 <div th:text="${bug.getTitle}" class="pull-left"></div>
                                                 <a class="btn btn-success ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}' (id=${bug.getId()},condition='true')}"
+                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='true')}"
                                                    th:text="'Set Completed'"></a>
 
                                             </div>
@@ -102,7 +102,7 @@
                                             <div class="card-header text-danger">
                                                 <div th:text="${bug.getTitle}" class="pull-left"></div>
                                                 <a class="btn btn-outline-focus ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}' (id=${bug.getId()},condition='false')}"
+                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='false')}"
                                                    th:text="'Set UnCompleted'"></a>
 
                                             </div>
@@ -135,7 +135,7 @@
                                             <div class="card-header">
                                                 <div th:text="${bug.getTitle}" class="pull-left"></div>
                                                 <a class="btn btn-success ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}' (id=${bug.getId()},condition='true')}"
+                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='true')}"
                                                    th:text="'Set Completed'"></a>
 
                                             </div>
@@ -161,7 +161,7 @@
                                             <div class="card-header text-warning">
                                                 <div th:text="${bug.getTitle}" class="pull-left"></div>
                                                 <a class="btn btn-outline-focus ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}' (id=${bug.getId()},condition='false')}"
+                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='false')}"
                                                    th:text="'Set UnCompleted'"></a>
 
                                             </div>
@@ -194,7 +194,7 @@
                                             <div class="card-header">
                                                 <div th:text="${bug.getTitle}" class="pull-left"></div>
                                                 <a class="btn btn-success ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}' (id=${bug.getId()},condition='true')}"
+                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='true')}"
                                                    th:text="'Set Completed'"></a>
 
                                             </div>
@@ -220,7 +220,7 @@
                                             <div class="card-header text-alternate">
                                                 <div th:text="${bug.getTitle}" class="pull-left"></div>
                                                 <a class="btn btn-outline-focus ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}' (id=${bug.getId()},condition='false')}"
+                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='false')}"
                                                    th:text="'Set UnCompleted'"></a>
 
                                             </div>
