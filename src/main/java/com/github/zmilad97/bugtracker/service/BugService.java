@@ -223,9 +223,7 @@ public class BugService {
             if (bugDto.getProjectId() != 0)
                 projects.add(projectService.getProjectById(bugDto.getProjectId()));
         });
-        projects.forEach(project -> {
-            projectDtos.add(projectService.getDtoById(project.getId()));
-        });
+        projects.forEach(project -> projectDtos.add(projectService.getDtoById(project.getId())));
         return projectDtos;
     }
 }
