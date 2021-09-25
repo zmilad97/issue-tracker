@@ -1,6 +1,7 @@
 package com.github.zmilad97.bugtracker.service;
 
 import com.github.zmilad97.bugtracker.dtos.BugDto;
+import com.github.zmilad97.bugtracker.dtos.ProjectDto;
 import com.github.zmilad97.bugtracker.dtos.UserDto;
 import com.github.zmilad97.bugtracker.model.Bug;
 import com.github.zmilad97.bugtracker.model.Project;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -212,5 +214,14 @@ public class BugService {
             bug.setCompleted(condition.equals("true"));
             bugRepository.save(bug);
         }
+    }
+
+    public Set<ProjectDto> getProjectDtoSetFromBugDto(List<BugDto> bugs) {
+        Set<ProjectDto> projectDtos = new HashSet<>();
+        bugs.forEach(bugDto -> {
+            if (bugDto.getProjectId() != 0)
+                projectDtos.add(projectService.getDtoById(bugDto.getProjectId()));
+        });
+        return projectDtos;
     }
 }
