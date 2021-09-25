@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -143,9 +147,9 @@ public class BugController {
         return new RedirectView("/bugs");
     }
 
-    @GetMapping("/bug/{id}/completed/{condition}")
-    public RedirectView markCompleted(@PathVariable int id, @PathVariable String condition) {
+    @GetMapping("/bug/{id}/completed/{condition}/{route}")
+    public RedirectView markCompleted(@PathVariable int id, @PathVariable String condition, @PathVariable String route) {
         bugService.complete(id, condition);
-        return new RedirectView("/bugs/assigned-to-me");
+        return new RedirectView("/bugs/" + route);
     }
 }
