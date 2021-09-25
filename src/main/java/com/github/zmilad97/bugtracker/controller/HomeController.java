@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -59,12 +60,12 @@ public class HomeController {
 
 
     @PostMapping("/register")
-    public ModelAndView register(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors) {
+    public RedirectView register(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors) {
         try {
             User registered = userService.registerNewUserAccount(userDto);
+            return new RedirectView("/dashboard");
         } catch (UserAlreadyExistException e) {
-            e.printStackTrace();
+            return new RedirectView("/signup");
         }
-        return new ModelAndView("/home/index", "user", userDto);
     }
 }
