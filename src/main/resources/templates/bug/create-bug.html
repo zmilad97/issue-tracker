@@ -131,28 +131,24 @@
                                         <p th:each="error: ${#fields.errors('steps')}"
                                            th:text="${error}">Validation error</p>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-                                            <div class="position-relative form-group">
-                                                <label for="project">Project </label>
-                                                <select name="project" id="project"
-                                                        class="custom-select"
-                                                        th:field="*{projectId}">
-                                                    <option value="-1">......Select Project......</option>
-                                                    <option th:each="project : ${projects}"
-                                                            th:value="${project.getId()}"
-                                                            th:text="'Project : ' + ${project.getTitle()} + ' In Team : ' + ${project.getTeamName()}">
-                                                    </option>
-                                                </select>
-                                                <p th:each="error: ${#fields.errors('project')}"
-                                                   th:text="${error}">Validation error</p>
-                                            </div>
-                                        </div>
+                                    <div class="position-relative form-group">
+                                        <label for="project">Project </label>
+                                        <select name="project" id="project"
+                                                class="custom-select"
+                                                th:field="*{projectId}">
+                                            <option value="-1">......Select Project......</option>
+                                            <option th:each="project : ${projects}"
+                                                    th:value="${project.getId()}"
+                                                    th:text="'Project : ' + ${project.getTitle()} + ' In Team : ' + ${project.getTeamName()}">
+                                            </option>
+                                        </select>
+                                        <p th:each="error: ${#fields.errors('projectId')}"
+                                           th:text="${error}">Validation error</p>
                                     </div>
 
                                     <div class="form-actions">
                                         <button class="btn btn-success" type="submit">
-                                            Submit
+                                            Create
                                         </button>
                                     </div>
                                 </form>
