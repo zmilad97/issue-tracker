@@ -89,6 +89,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="tab-content">
+
                                             <div th:id="'tab-0'+${project.getId()}" class="tab-pane show active">
                                                 <div class="table-responsive">
                                                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
@@ -130,8 +131,10 @@
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <a class="btn btn-primary"
-                                                                       th:href="@{'/bug/{id}' (id=${bug.getId()})}">Details</a>
+                                                                    <button class="btn btn-primary details"
+                                                                            th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
+                                                                        Details
+                                                                    </button>
                                                                     <a class="btn btn-focus"
                                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
                                                                        th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
@@ -155,7 +158,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <div th:each="bug:${bugs}" th:if="${project.getId()}==${bug.getProjectId()} and ${bug.getPriority()}==2">
+                                                        <div th:each="bug:${bugs}"
+                                                             th:if="${project.getId()}==${bug.getProjectId()} and ${bug.getPriority()}==2">
                                                             <tr>
                                                                 <td class="text-center text-muted"
                                                                     th:text="${bug.getId()}"></td>
@@ -182,8 +186,10 @@
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <a class="btn btn-primary"
-                                                                       th:href="@{'/bug/{id}' (id=${bug.getId()})}">Details</a>
+                                                                    <button class="btn btn-primary details"
+                                                                            th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
+                                                                        Details
+                                                                    </button>
                                                                     <a class="btn btn-focus"
                                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
                                                                        th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
@@ -207,7 +213,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <div th:each="bug:${bugs}" th:if="${project.getId()}==${bug.getProjectId()} and ${bug.getPriority()}==3">
+                                                        <div th:each="bug:${bugs}"
+                                                             th:if="${project.getId()}==${bug.getProjectId()} and ${bug.getPriority()}==3">
                                                             <tr>
                                                                 <td class="text-center text-muted"
                                                                     th:text="${bug.getId()}"></td>
@@ -234,8 +241,10 @@
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <a class="btn btn-primary"
-                                                                       th:href="@{'/bug/{id}' (id=${bug.getId()})}">Details</a>
+                                                                    <button class="btn btn-primary details"
+                                                                            th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
+                                                                        Details
+                                                                    </button>
                                                                     <a class="btn btn-focus"
                                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
                                                                        th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
@@ -258,11 +267,46 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div th:insert="fragments/foot :: #footer"></div>
+<div th:replace="fragments/bug-details-modal :: bug-details-modal"></div>
+<script type="text/javascript">
 
+    $(document).ready(function () {
+        $(document).on('click', '.details', function (event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+
+            $.get(href, function (bug, status) {
+                $('.modal-content #pTitle').text(bug.projectName);
+                $('.modal-content #pVersion').text(' / ' + bug.version);
+                $('.modal-content #bTitle').text(bug.title);
+                $('.modal-content #bDescription').text(bug.description);
+                $('.modal-content #bAssignee').text(bug.assignedName);
+                $('.modal-content #bReporter').text(bug.creatorName);
+                if (bug.priority === 1) {
+                    $('.modal-content #bPriority').text('Critical');
+                    $('.modal-content #bPriority').removeClass('badge-warning').removeClass('badge-alternate').addClass('badge-danger');
+                } else if (bug.priority === 2) {
+                    $('.modal-content #bPriority').text('Major');
+                    $('.modal-content #bPriority').removeClass('badge-danger').removeClass('badge-alternate').addClass('badge-warning');
+                } else if (bug.priority === 3) {
+                    $('.modal-content #bPriority').text('Normal');
+                    $('.modal-content #bPriority').removeClass('badge-warning').removeClass('badge-danger').addClass('badge-alternate');
+                }
+
+                $('.modal-content #bSteps').text(bug.steps);
+
+                $('.modal-content #bPassedCreated').text('Created ' + bug.createdTimePassed);
+                $('.modal-content #bPassedUpdate').text('Last Update  ' + lastUpdatedTimePassed);
+
+            });
+
+            $('#bug-details-modal').modal('show');
+        });
+    });
+</script>
 </body>
 
 </html>
