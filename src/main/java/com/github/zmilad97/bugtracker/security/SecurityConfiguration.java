@@ -59,10 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/dashboard").authenticated() //TODO:fix it later
-//                .antMatchers("/api/work/**").hasAnyRole("ADMIN", "OWNER")
-//                .antMatchers("/api/schedule/**").hasAnyRole("ADMIN", "OWNER")
-//                .antMatchers("/api/reserve/work/*").hasAnyRole("ADMIN")
-//                .antMatchers("/test").authenticated()
+                .antMatchers("/api/**").authenticated()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/register").permitAll()
