@@ -64,7 +64,7 @@
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel"
-                         th:if="${bug.getId()} != null ">
+                         th:if="${bug.getId()} != 0 ">
                         <div class="card-body mb-3 card text-white bg-danger" th:if="${bug.getPriority()} == 1">
                             <div class="card-header">
                                 <div class="pull-right ml-auto">
