@@ -24,6 +24,7 @@ public class Bug {
     @ManyToOne
     private Project project;
     private String createdAt;
+    private String lastUpdate;
     private boolean completed;
 
     public int getId() {
@@ -120,5 +121,13 @@ public class Bug {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }
