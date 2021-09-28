@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        @media screen and (min-width: 1500px) {
+            .modal-dialog {
+                max-width: 2000px; /* New width for default modal */
+                margin: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="bug-details-modal" th:fragment="bug-details-modal" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" style="display: none;"
+     class="modal fade  bd-example-modal-lg" aria-hidden="true">
+    <div class="modal-dialog modal-xl"
+         style="max-width: 2000px; margin-left: 30px !important; margin-right: 30px !important;">
+        <div class="modal-content" style="max-width: 1500px !important;">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card-title">
+                            <span style="padding-left: 10px; font-size: 16px; color: rgb(23,43,77)" id="pTitle">Project name
+                            </span><span id="pVersion"> /AppVersion</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="close pull-right ml-auto" data-bs-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div style="padding-left: 25px">
+                            <div class="card-title">
+                                <span style="color: rgb(35,59,101)"
+                                      id="bTitle">Bug Title</span>
+                            </div>
+                            <div id="accordion" class="accordion-wrapper mb-3">
+                                <div class="card">
+                                    <div id="headingOne" class="card-header">
+                                        <button type="button" data-toggle="collapse" data-target="#collapseOne1"
+                                                aria-expanded="false" aria-controls="collapseOne"
+                                                class="text-left m-0 p-0 btn btn-link btn-block collapsed">
+                                            <span class="card-title">Description</span>
+                                        </button>
+                                    </div>
+                                    <div data-parent="#accordion" id="collapseOne1" aria-labelledby="headingOne"
+                                         class="collapse show" style="">
+                                        <div class="card-body">
+                                            <div class="scroll-area-sm">
+                                                <div class="scrollbar-container ps--active-y ps">
+                                                    <p id="bDescription">Nothing Yet</p>
+                                                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                                                        <div class="ps__thumb-x" tabindex="0"
+                                                             style="left: 0px; width: 0px;"></div>
+                                                    </div>
+                                                    <div class="ps__rail-y"
+                                                         style="top: 0px; height: 400px; right: 0px;">
+                                                        <div class="ps__thumb-y" tabindex="0"
+                                                             style="top: 0px; height: 151px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div id="headingTwo" class="b-radius-0 card-header">
+                                        <button type="button" data-toggle="collapse" data-target="#collapseOne2"
+                                                aria-expanded="false" aria-controls="collapseTwo"
+                                                class="text-left m-0 p-0 btn btn-link btn-block">
+                                            <span class="card-title">Steps</span>
+                                        </button>
+                                    </div>
+                                    <div data-parent="#accordion" id="collapseOne2" class="collapse">
+                                        <div class="card-body">
+                                            <div class="scroll-area-sm">
+                                                <div class="scrollbar-container ps--active-y ps"><p id="bSteps">Nothing
+                                                    Yet</p>
+                                                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                                                        <div class="ps__thumb-x" tabindex="0"
+                                                             style="left: 0px; width: 0px;"></div>
+                                                    </div>
+                                                    <div class="ps__rail-y"
+                                                         style="top: 0px; height: 400px; right: 0px;">
+                                                        <div class="ps__thumb-y" tabindex="0"
+                                                             style="top: 0px; height: 151px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-border " style="border-color: #dfe1e6;">
+                            <div class="card-body">
+                                <table class="mb-0 table table-borderless">
+                                    <tbody>
+                                    <tr>
+                                        <th>
+                                            Assignee
+                                        </th>
+                                        <td id="bAssignee">
+                                            Milad
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Reporter
+                                        </th>
+                                        <td id="bReporter">
+                                            Milad Zaeri
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Priority</th>
+                                        <td >
+                                            <div id="bPriority" class="badge ">
+                                                Critical
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span style="padding: 20px">Created 2 Days Ago </span>
+                        </div>
+                        <div class="row">
+                            <span style="padding: 20px">Last Updated 1 Hour Ago</span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <br>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</div>
+</body>
+</html>
