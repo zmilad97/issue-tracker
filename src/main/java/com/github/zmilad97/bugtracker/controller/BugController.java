@@ -112,7 +112,7 @@ public class BugController {
 
     @GetMapping("/bug/{id}/assigned/details")
     public ModelAndView assignedDetails(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("/assign/assigned-bug-details");
+        ModelAndView modelAndView = new ModelAndView("/assign/assigned-bug-details"); //TODO: it can be change to simple bug details page
         modelAndView.addObject("bug", bugService.getAssignedBug(id));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
@@ -155,4 +155,5 @@ public class BugController {
         bugService.complete(id, condition);
         return new RedirectView("/bugs/" + route);
     }
+
 }
