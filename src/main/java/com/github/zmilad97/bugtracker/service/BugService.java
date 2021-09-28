@@ -13,7 +13,9 @@ import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -22,13 +24,15 @@ public class BugService {
     private final UserRepository userRepository;
     private final TeamService teamService;
     private final ProjectService projectService;
+    private final ToolsService toolsService;
 
     @Autowired
-    public BugService(BugRepository bugRepository, UserRepository userRepository, TeamService teamService, ProjectService projectService) {
+    public BugService(BugRepository bugRepository, UserRepository userRepository, TeamService teamService, ProjectService projectService, ToolsService toolsService) {
         this.bugRepository = bugRepository;
         this.userRepository = userRepository;
         this.teamService = teamService;
         this.projectService = projectService;
+        this.toolsService = toolsService;
     }
 
 
@@ -53,7 +57,7 @@ public class BugService {
 
     public void save(BugDto bugDto) {
         Bug bug = new Bug();
-        bug.setCreatedAt(LocalDateTime.now().toString());
+        bug.setCreatedAt(LocalDateTime.now());
         bug.setSteps(bugDto.getSteps());
         bug.setDescription(bugDto.getDescription());
         bug.setVersion(bugDto.getVersion());
@@ -74,7 +78,10 @@ public class BugService {
         bugDto.setId(bug.getId());
         bugDto.setDescription(bug.getDescription());
         bugDto.setTitle(bug.getTitle());
-        bugDto.setTime(bug.getCreatedAt());
+        if (bug.getCreatedAt() != null) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            bugDto.setTime(dtf.format(bug.getCreatedAt()));
+        }
         bugDto.setPriority(bug.getPriority());
         if (bug.getAssigned() != null)
             bugDto.setAssignedId(bug.getAssigned().getId());
@@ -101,6 +108,13 @@ public class BugService {
         else
             bugDto.setAssignedName("No One");
         bugDto.setCompleted(bug.isCompleted());
+
+        bugDto.setCreatedTimePassed(toolsService.getPassedDate(bug.getCreatedAt(), LocalDateTime.now()));
+
+        if (bug.getLastUpdate() != null) {
+            bugDto.setCreatedTimePassed(toolsService.getPassedDate(bug.getLastUpdate(), LocalDateTime.now()));
+        }
+
         return bugDto;
     }
 
@@ -224,4 +238,6 @@ public class BugService {
         projectDtos.sort(Comparator.comparing(ProjectDto::getId));
         return projectDtos;
     }
+
+
 }
