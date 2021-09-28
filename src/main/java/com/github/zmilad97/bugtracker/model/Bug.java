@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Entity
 public class Bug {
@@ -23,8 +24,8 @@ public class Bug {
     private Team team;
     @ManyToOne
     private Project project;
-    private String createdAt;
-    private String lastUpdate;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastUpdate;
     private boolean completed;
 
     public int getId() {
@@ -91,14 +92,6 @@ public class Bug {
         this.creator = creator;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Team getTeam() {
         return team;
     }
@@ -123,11 +116,19 @@ public class Bug {
         this.completed = completed;
     }
 
-    public String getLastUpdate() {
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 }
