@@ -18,6 +18,9 @@ public class BugDto {
     private int projectId;
     private String projectName;
     private boolean isCompleted;
+    private String createdTime;
+    private String lastUpdatedTime;
+
 
     public String getCreatorName() {
         return creatorName;
