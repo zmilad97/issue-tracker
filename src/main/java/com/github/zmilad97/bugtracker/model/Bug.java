@@ -1,5 +1,7 @@
 package com.github.zmilad97.bugtracker.model;
 
+import com.github.zmilad97.bugtracker.enums.Status;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,7 +28,7 @@ public class Bug {
     private Project project;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdate;
-    private boolean completed;
+    private Status status; //TODO: make it to be Status and use Enum
 
     public int getId() {
         return id;
@@ -108,12 +110,12 @@ public class Bug {
         this.project = project;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {
