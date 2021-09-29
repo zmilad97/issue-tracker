@@ -3,6 +3,7 @@ package com.github.zmilad97.bugtracker.service;
 import com.github.zmilad97.bugtracker.dtos.BugDto;
 import com.github.zmilad97.bugtracker.dtos.ProjectDto;
 import com.github.zmilad97.bugtracker.dtos.UserDto;
+import com.github.zmilad97.bugtracker.enums.Status;
 import com.github.zmilad97.bugtracker.model.Bug;
 import com.github.zmilad97.bugtracker.model.Project;
 import com.github.zmilad97.bugtracker.model.Team;
@@ -69,6 +70,7 @@ public class BugService {
             bug.setProject(projectService.getProjectById(bugDto.getProjectId()));
             bug.setTeam(bug.getProject().getTeam());
         }
+        bug.setStatus(Status.PENDING);
         bugRepository.save(bug);
     }
 
@@ -107,7 +109,7 @@ public class BugService {
             bugDto.setAssignedName(bug.getAssigned().getFirstName() + " " + bug.getAssigned().getLastName());
         else
             bugDto.setAssignedName("No One");
-        bugDto.setCompleted(bug.isCompleted());
+        bugDto.setStatus(bug.getStatus().toString());
 
         bugDto.setCreatedTimePassed(toolsService.getPassedDate(bug.getCreatedAt(), LocalDateTime.now()));
 
@@ -153,6 +155,7 @@ public class BugService {
             if (user != null && bug.getTeam().getMembers().contains(user)) {
                 List<Team> usersTeam = teamService.getUserTeams(user.getId());
                 if (usersTeam.contains(bug.getTeam())) {
+                    bug.setStatus(Status.IN_PROGRESS);
                     bug.setAssigned(user);
                     bugRepository.save(bug);
                 }
@@ -231,10 +234,16 @@ public class BugService {
         return new ArrayList<>();
     }
 
-    public void complete(int id, String condition) {
+    public void setStatus(int id, String status) {
         Bug bug = bugRepository.findBugById(id);
         if (bug.getCreator().equals(SecurityUtil.getCurrentUser()) || bug.getAssigned().equals(SecurityUtil.getCurrentUser())) {
-            bug.setCompleted(condition.equals("true"));
+            if (status.equalsIgnoreCase("completed"))
+                bug.setStatus(Status.COMPLETED);
+            else if (status.equalsIgnoreCase("in_progress"))
+                bug.setStatus(Status.IN_PROGRESS);
+            else if (status.equalsIgnoreCase("pending"))
+                bug.setStatus(Status.PENDING);
+
             bugRepository.save(bug);
         }
     }
