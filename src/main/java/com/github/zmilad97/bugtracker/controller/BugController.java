@@ -56,8 +56,8 @@ public class BugController {
         return modelAndView;
     }
 
-    @GetMapping("/bugs/assigned-to-me")
-    public ModelAndView assignedToMe() {
+    @GetMapping("/bugs/assigned/{projectId}")
+    public ModelAndView assignedToMeByProject(@PathVariable int projectId) { //TODO : fix here
         ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
         modelAndView.addObject("bugs", bugService.assignedToMe());
         modelAndView.addObject("sideBarProjects",
@@ -149,9 +149,9 @@ public class BugController {
         return new RedirectView("/bugs");
     }
 
-    @GetMapping("/bug/{id}/completed/{condition}/{route}")
-    public RedirectView markCompleted(@PathVariable int id, @PathVariable String condition, @PathVariable String route) {
-        bugService.complete(id, condition);
+    @GetMapping("/bug/{id}/status/{status}/{route}")
+    public RedirectView setStatus(@PathVariable int id, @PathVariable String status, @PathVariable String route) {
+        bugService.setStatus(id, status);
         return new RedirectView("/bugs/" + route);
     }
 
