@@ -17,7 +17,7 @@ public class BugDto {
     private String creatorName;
     private int projectId;
     private String projectName;
-    private boolean isCompleted;
+    private String status;
     private String createdTimePassed;
     private String lastUpdatedTimePassed;
 
@@ -142,12 +142,12 @@ public class BugDto {
         this.projectName = projectName;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getCreatedTimePassed() {
