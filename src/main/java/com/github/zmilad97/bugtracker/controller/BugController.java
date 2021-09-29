@@ -2,7 +2,6 @@ package com.github.zmilad97.bugtracker.controller;
 
 import com.github.zmilad97.bugtracker.dtos.BugDto;
 import com.github.zmilad97.bugtracker.dtos.ProjectDto;
-import com.github.zmilad97.bugtracker.model.Bug;
 import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import com.github.zmilad97.bugtracker.service.BugService;
 import com.github.zmilad97.bugtracker.service.ProjectService;
@@ -131,7 +130,7 @@ public class BugController {
         ModelAndView modelAndView = new ModelAndView("/bug/edit-bug");
         List<ProjectDto> projects = projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser());
         modelAndView.addObject("projects", projects);
-        modelAndView.addObject("bug", bugService.getBug(id));
+        modelAndView.addObject("bug", bugService.getBugDto(id));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
