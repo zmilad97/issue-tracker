@@ -1,5 +1,6 @@
 package com.github.zmilad97.bugtracker.service;
 
+import com.github.zmilad97.bugtracker.enums.Status;
 import com.github.zmilad97.bugtracker.model.Project;
 import com.github.zmilad97.bugtracker.model.User;
 import com.github.zmilad97.bugtracker.repository.BugRepository;
@@ -15,13 +16,11 @@ import java.util.Map;
 @Service
 public class HomeService {
     private final ProjectService projectService;
-    private final BugService bugService;
     private final BugRepository bugRepository;
 
     @Autowired
-    public HomeService(ProjectService projectService, BugService bugService, BugRepository bugRepository) {
+    public HomeService(ProjectService projectService, BugRepository bugRepository) {
         this.projectService = projectService;
-        this.bugService = bugService;
         this.bugRepository = bugRepository;
     }
 
@@ -34,9 +33,9 @@ public class HomeService {
         projects.forEach(project -> {
             List<Integer> stats = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
-                int all = bugRepository.findBugsByProjectAndPriority(project, i+1).size();
+                int all = bugRepository.findBugsByProjectAndPriority(project, i + 1).size();
                 stats.add(all);
-                int completed = bugRepository.findBugsByProjectAndPriorityAndCompletedIsTrue(project, i+1).size();
+                int completed = bugRepository.findBugsByProjectAndPriorityAndStatus(project, i + 1, Status.COMPLETED).size();
                 stats.add(completed);
             }
 
