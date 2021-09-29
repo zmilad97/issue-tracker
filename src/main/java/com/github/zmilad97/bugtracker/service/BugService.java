@@ -121,7 +121,19 @@ public class BugService {
     public void update(BugDto bugDto) {
         Bug bug = bugRepository.findBugById(bugDto.getId());
         if (bug != null && bug.getCreator().equals(SecurityUtil.getCurrentUser())) {
-            save(bugDto);
+            bug.setCreatedAt(LocalDateTime.now());
+            bug.setSteps(bugDto.getSteps());
+            bug.setDescription(bugDto.getDescription());
+            bug.setVersion(bugDto.getVersion());
+            bug.setTitle(bugDto.getTitle());
+            bug.setAssigned(userRepository.findUserById(bugDto.getAssignedId()));
+            bug.setCreator(SecurityUtil.getCurrentUser());
+            bug.setPriority(bugDto.getPriority());
+            if (bugDto.getProjectId() != -1) {
+                bug.setProject(projectService.getProjectById(bugDto.getProjectId()));
+                bug.setTeam(bug.getProject().getTeam());
+            }
+            bugRepository.save(bug);
         }
     }
 
