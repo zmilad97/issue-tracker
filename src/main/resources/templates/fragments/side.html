@@ -57,19 +57,28 @@
                     </li>
 
 
-
-                    <li>
-                        <a th:href="@{/bugs/assigned-to-me}">
-                            <i class="metismenu-icon pe-7s-id"></i>
-                            Bugs Assigned To you
+                    <li class="mm-show">
+                        <a href="#" aria-expanded="false">
+                            <i class="metismenu-icon pe-7s-plugin"></i>
+                            Bugs Assigned To You
+                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                         </a>
-                    </li>
 
+                        <ul class="mm-collapse " style="" th:each="project : ${projects}">
+                            <li>
+                                <a th:href="@{'/bugs/assigned/{id}' (id=${project.getId()})}"
+                                   th:text="${project.getTitle()}">
+                                    <i class="metismenu-icon">
+                                    </i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="mm-show">
                         <a href="#" aria-expanded="false">
                             <i class="metismenu-icon pe-7s-plugin"></i>
-                            Bugs By Project
+                            All Bugs By Project
                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                         </a>
 
@@ -99,7 +108,6 @@
                             Projects You Participated
                         </a>
                     </li>
-
 
 
                     <li class="app-sidebar__heading">Team</li>
