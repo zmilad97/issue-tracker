@@ -147,7 +147,7 @@
                                                             th:text="'Project : ' + ${project.getTitle()} + ' In Team : ' + ${project.getTeamName()}">
                                                     </option>
                                                 </select>
-                                                <p th:each="error: ${#fields.errors('project')}"
+                                                <p th:each="error: ${#fields.errors('projectId')}"
                                                    th:text="${error}">Validation error</p>
                                             </div>
                                         </div>
