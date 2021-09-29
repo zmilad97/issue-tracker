@@ -113,18 +113,16 @@
 
                                                                 <td class="text-center">
                                                                     <div class="badge badge-info"
-                                                                         th:if="${bug.getAssignedId()}==0">
-                                                                        Pending
+                                                                         th:if="${bug.getStatus().equals('PENDING')}">
+                                                                        PENDING
                                                                     </div>
-                                                                    <div th:if="${bug.getAssignedId()}!=0">
-                                                                        <div class="badge badge-danger"
-                                                                             th:if="${!bug.isCompleted()}">In
-                                                                            Progress
-                                                                        </div>
-                                                                        <div class="badge badge-success"
-                                                                             th:if="${bug.isCompleted()}">
-                                                                            Completed
-                                                                        </div>
+                                                                    <div class="badge badge-focus"
+                                                                         th:if="${bug.getStatus().equals('IN_PROGRESS')}">
+                                                                        IN PROGRESS
+                                                                    </div>
+                                                                    <div class="badge badge-success"
+                                                                         th:if="${bug.getStatus().equals('COMPLETED')}">
+                                                                        COMPLETED
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center">
@@ -132,7 +130,7 @@
                                                                        th:href="@{'/bug/{id}' (id=${bug.getId()})}">Details</a>
                                                                     <a class="btn btn-focus"
                                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
-                                                                       th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
+                                                                       th:if="${bug.getStatus().equals('PENDING')}">Take</a>
                                                                 </td>
                                                             </tr>
                                                         </div>
@@ -165,18 +163,16 @@
 
                                                                 <td class="text-center">
                                                                     <div class="badge badge-info"
-                                                                         th:if="${bug.getAssignedId()}==0">
-                                                                        Pending
+                                                                         th:if="${bug.getStatus().equals('PENDING')}">
+                                                                        PENDING
                                                                     </div>
-                                                                    <div th:if="${bug.getAssignedId()}!=0">
-                                                                        <div class="badge badge-danger"
-                                                                             th:if="${!bug.isCompleted()}">In
-                                                                            Progress
-                                                                        </div>
-                                                                        <div class="badge badge-success"
-                                                                             th:if="${bug.isCompleted()}">
-                                                                            Completed
-                                                                        </div>
+                                                                    <div class="badge badge-focus"
+                                                                         th:if="${bug.getStatus().equals('IN_PROGRESS')}">
+                                                                        IN PROGRESS
+                                                                    </div>
+                                                                    <div class="badge badge-success"
+                                                                         th:if="${bug.getStatus().equals('COMPLETED')}">
+                                                                        COMPLETED
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center">
@@ -184,7 +180,7 @@
                                                                        th:href="@{'/bug/{id}' (id=${bug.getId()})}">Details</a>
                                                                     <a class="btn btn-focus"
                                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
-                                                                       th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
+                                                                       th:if="${bug.getStatus().equals('PENDING')}">Take</a>
                                                                 </td>
                                                             </tr>
                                                         </div>
@@ -217,18 +213,16 @@
 
                                                                 <td class="text-center">
                                                                     <div class="badge badge-info"
-                                                                         th:if="${bug.getAssignedId()}==0">
-                                                                        Pending
+                                                                         th:if="${bug.getStatus().equals('PENDING')}">
+                                                                        PENDING
                                                                     </div>
-                                                                    <div th:if="${bug.getAssignedId()}!=0">
-                                                                        <div class="badge badge-danger"
-                                                                             th:if="${!bug.isCompleted()}">In
-                                                                            Progress
-                                                                        </div>
-                                                                        <div class="badge badge-success"
-                                                                             th:if="${bug.isCompleted()}">
-                                                                            Completed
-                                                                        </div>
+                                                                    <div class="badge badge-focus"
+                                                                         th:if="${bug.getStatus().equals('IN_PROGRESS')}">
+                                                                        IN PROGRESS
+                                                                    </div>
+                                                                    <div class="badge badge-success"
+                                                                         th:if="${bug.getStatus().equals('COMPLETED')}">
+                                                                        COMPLETED
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center">
@@ -236,7 +230,7 @@
                                                                        th:href="@{'/bug/{id}' (id=${bug.getId()})}">Details</a>
                                                                     <a class="btn btn-focus"
                                                                        th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
-                                                                       th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
+                                                                       th:if="${bug.getStatus().equals('PENDING')}">Take</a>
                                                                 </td>
                                                             </tr>
                                                         </div>
