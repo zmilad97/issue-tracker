@@ -1,5 +1,6 @@
 package com.github.zmilad97.bugtracker.repository;
 
+import com.github.zmilad97.bugtracker.enums.Status;
 import com.github.zmilad97.bugtracker.model.Bug;
 import com.github.zmilad97.bugtracker.model.Project;
 import com.github.zmilad97.bugtracker.model.Team;
@@ -21,7 +22,7 @@ public interface BugRepository extends JpaRepository<Bug, Integer> {
 
     List<Bug> findBugsByProject(Project project);
 
-    List<Bug> findBugsByProjectAndPriorityAndCompletedIsTrue(Project project, int priority);
+    List<Bug> findBugsByProjectAndPriorityAndStatus(Project project, int priority, Status status);
 
     List<Bug> findBugsByProjectAndPriority(Project project, int priority);
 }
