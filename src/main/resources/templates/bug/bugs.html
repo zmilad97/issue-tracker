@@ -135,9 +135,10 @@
                                                                             th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                                         Details
                                                                     </button>
-                                                                    <a class="btn btn-focus"
-                                                                       th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
-                                                                       th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
+                                                                    <a th:href="@{'/bug/{id}/edit' (id=${bug.getId()})}"
+                                                                       class="btn btn-warning">Edit</a>
+                                                                    <a th:href="@{'/bug/{id}/delete' (id=${bug.getId()})}"
+                                                                       class="btn btn-outline-danger">Delete</a>
                                                                 </td>
                                                             </tr>
                                                         </div>
@@ -190,9 +191,11 @@
                                                                             th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                                         Details
                                                                     </button>
-                                                                    <a class="btn btn-focus"
-                                                                       th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
-                                                                       th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
+                                                                    <a th:href="@{'/bug/{id}/edit' (id=${bug.getId()})}"
+                                                                       class="btn btn-warning">Edit</a>
+                                                                    <a th:href="@{'/bug/{id}/delete' (id=${bug.getId()})}"
+                                                                       class="btn btn-outline-danger">Delete</a>
+
                                                                 </td>
                                                             </tr>
                                                         </div>
@@ -245,9 +248,10 @@
                                                                             th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                                         Details
                                                                     </button>
-                                                                    <a class="btn btn-focus"
-                                                                       th:href="@{'/bug/{id}/assign-to-me'(id=${bug.getId()})}"
-                                                                       th:if="${!bug.isCompleted()} and ${bug.getAssignedId()}==0">Take</a>
+                                                                    <a th:href="@{'/bug/{id}/edit' (id=${bug.getId()})}"
+                                                                       class="btn btn-warning">Edit</a>
+                                                                    <a th:href="@{'/bug/{id}/delete' (id=${bug.getId()})}"
+                                                                       class="btn btn-outline-danger">Delete</a>
                                                                 </td>
                                                             </tr>
                                                         </div>
@@ -270,7 +274,6 @@
 </div>
 
 <div th:insert="fragments/foot :: #footer"></div>
-<div th:replace="fragments/bug-details-modal :: bug-details-modal"></div>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -299,14 +302,21 @@
                 $('.modal-content #bSteps').text(bug.steps);
 
                 $('.modal-content #bPassedCreated').text('Created ' + bug.createdTimePassed);
-                $('.modal-content #bPassedUpdate').text('Last Update  ' + lastUpdatedTimePassed);
+                if (bug.lastUpdatedTimePassed !== null)
+                    $('.modal-content #bPassedUpdate').text('Last Update  ' + bug.lastUpdatedTimePassed);
 
+                const etext = '/bug/' + bug.id + '/edit';
+                $('.modal-content #bEdit').attr("href", etext);
+                const edelete = '/bug/' + bug.id + '/delete';
+
+                $('.modal-content #bDelete').attr("href", edelete);
             });
 
             $('#bug-details-modal').modal('show');
         });
     });
 </script>
+<div th:replace="fragments/bug-details-modal :: bug-details-modal"></div>
 </body>
 
 </html>
