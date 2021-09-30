@@ -16,7 +16,7 @@ public interface BugRepository extends JpaRepository<Bug, Integer> {
 
     List<Bug> findBugByCreatorEquals(User user);
 
-    List<Bug> findBugsByAssigned(User user);
+    List<Bug> findBugsByAssignedAndProject(User user, Project project);
 
     List<Bug> findBugsByTeam(Team team);
 
