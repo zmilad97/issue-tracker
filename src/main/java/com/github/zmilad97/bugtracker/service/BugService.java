@@ -242,8 +242,10 @@ public class BugService {
                 bug.setStatus(Status.COMPLETED);
             else if (status.equalsIgnoreCase("in_progress"))
                 bug.setStatus(Status.IN_PROGRESS);
-            else if (status.equalsIgnoreCase("pending"))
+            else if (status.equalsIgnoreCase("pending")) {
                 bug.setStatus(Status.PENDING);
+                bug.setAssigned(null);
+            }
 
             bugRepository.save(bug);
         }
