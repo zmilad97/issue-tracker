@@ -8,10 +8,7 @@ import com.github.zmilad97.bugtracker.service.ProjectService;
 import com.github.zmilad97.bugtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -20,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BugController {
@@ -59,7 +57,7 @@ public class BugController {
     @GetMapping("/bugs/assigned/{projectId}")
     public ModelAndView assignedToMeByProject(@PathVariable int projectId) { //TODO : fix here
         ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
-        modelAndView.addObject("bugs", bugService.assignedToMe());
+        modelAndView.addObject("bugs", bugService.assignedToMeByProject(projectId));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
@@ -149,10 +147,13 @@ public class BugController {
         return new RedirectView("/bugs");
     }
 
-    @GetMapping("/bug/{id}/status/{status}/{route}")
-    public RedirectView setStatus(@PathVariable int id, @PathVariable String status, @PathVariable String route) {
+    @GetMapping("/bug/{id}/status/{status}")
+    public RedirectView setStatus(@PathVariable int id, @PathVariable String status, @RequestParam String pId) {
         bugService.setStatus(id, status);
-        return new RedirectView("/bugs/" + route);
+        if (pId != null)
+            return new RedirectView("/bugs/assigned/" + pId);
+        else
+            return new RedirectView("/bugs");
     }
 
 }
