@@ -69,183 +69,189 @@
                 <div class="tab-content">
                     <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
                         <div class="row">
-                            <div class="col-md-4">
-                                <div th:each="bug:${bugs}">
-                                    <div th:if=" ${bug.getPriority()} == 1">
-                                        <div class="mb-3 card text-white bg-danger" th:if=" ${!bug.isCompleted()}">
-                                            <div class="card-header">
-                                                <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                                <a class="btn btn-success ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='true')}"
-                                                   th:text="'Set Completed'"></a>
+                            <div class="col-md-5">
+                                <div class="card  bg-heavy-rain">
+                                    <div style="padding-bottom: 20px" class="card-header bg-happy-fisher"
+                                         th:text="' TO DO : '">
+                                    </div>
+                                    <div class="card-body">
+                                        <div th:each="bug : ${bugs}"
+                                             th:if="${bug.getStatus().equalsIgnoreCase('IN_PROGRESS')}">
+                                            <div class="mb-3 card text-white bg-danger"
+                                                 th:if="${bug.getPriority()} == 1">
+                                                <div class="card-header">
+                                                    <div th:text="${bug.getTitle}" class="pull-left"></div>
+                                                    <a class="btn btn-success ml-auto pull-right"
+                                                       th:href="@{'/bug/{id}/status/{condition}?pId={pId}' (id=${bug.getId()},pId = ${bug.getProjectId()},condition='COMPLETED')}"
+                                                       th:text="'Set Completed'"></a>
 
-                                            </div>
-                                            <div class="card-body">
-                                                <div th:text="${bug.getDescription}"></div>
-                                                <br>
-
-                                            </div>
-                                            <div class="card-footer">
-                                                <div th:text="'P/: '+${bug.getProjectName()}"></div>
-                                                <div class="pull-right ml-auto">
-
-                                                    <a class="btn btn btn-info ml-auto pull-right"
-                                                       th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
-                                                        Details
-                                                    </a>
                                                 </div>
+                                                <div class="card-body">
+                                                    <div th:text="${bug.getDescription}"></div>
+                                                    <br>
+
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="pull-right ml-auto">
+
+                                                        <a class="btn btn btn-info ml-auto pull-right"
+                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                            Details
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="mb-3 card text-white bg-warning"
+                                                 th:if="${bug.getPriority()} == 2">
+                                                <div class="card-header">
+                                                    <div th:text="${bug.getTitle}" class="pull-left"></div>
+                                                    <a class="btn btn-success ml-auto pull-right"
+                                                       th:href="@{'/bug/{id}/status/{condition}?pId={pId}' (id=${bug.getId()},pId = ${bug.getProjectId()},condition='COMPLETED')}"
+                                                       th:text="'Set Completed'"></a>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div th:text="${bug.getDescription}"></div>
+                                                    <br>
+
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="pull-right ml-auto">
+
+                                                        <a class="btn btn btn-info ml-auto pull-right"
+                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                            Details
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="mb-3 card text-white bg-alternate"
+                                                 th:if="${bug.getPriority()} == 3">
+                                                <div class="card-header">
+                                                    <div th:text="${bug.getTitle}" class="pull-left"></div>
+                                                    <a class="btn btn-success ml-auto pull-right"
+                                                       th:href="@{'/bug/{id}/status/{condition}?pId={pId}' (id=${bug.getId()},pId = ${bug.getProjectId()},condition='COMPLETED')}"
+                                                       th:text="'Set Completed'"></a>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div th:text="${bug.getDescription}"></div>
+                                                    <br>
+
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="pull-right ml-auto">
+
+                                                        <a class="btn btn btn-info ml-auto pull-right"
+                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                            Details
+                                                        </a>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                         </div>
-                                        <div class="card-shadow-danger border mb-3 card  border-danger text-danger"
-                                             th:if=" ${bug.isCompleted()}">
-                                            <div class="card-header text-danger">
-                                                <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                                <a class="btn btn-outline-focus ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='false')}"
-                                                   th:text="'Set UnCompleted'"></a>
-
-                                            </div>
-                                            <div class="card-body">
-                                                <div th:text="${bug.getDescription}"></div>
-                                                <br>
-
-                                            </div>
-                                            <div class="card-footer">
-                                                <div th:if="${bug.getProjectName()} !=null"
-                                                     th:text="'P/: ' +${bug.getProjectName()}"></div>
-                                                <div class="pull-right ml-auto">
-
-                                                    <a class="btn btn btn-info ml-auto pull-right"
-                                                       th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
-                                                        Details
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
                                     </div>
                                 </div>
+
                             </div>
-                            <div class="col-md-4">
-                                <div th:each="bug:${bugs}">
-                                    <div th:if=" ${bug.getPriority()} == 2">
-                                        <div class="mb-3 card text-white bg-warning" th:if=" ${!bug.isCompleted()}">
-                                            <div class="card-header">
-                                                <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                                <a class="btn btn-success ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='true')}"
-                                                   th:text="'Set Completed'"></a>
+                            <div class="col-md-1">
 
-                                            </div>
-                                            <div class="card-body">
-                                                <div th:text="${bug.getDescription}"></div>
-                                                <br>
+                            </div>
 
-                                            </div>
-                                            <div class="card-footer">
-                                                <div th:text="'P/: '+${bug.getProjectName()}"></div>
-                                                <div class="pull-right ml-auto">
+                            <div class="col-md-5">
+                                <div class="card  bg-amy-crisp">
+                                    <div style="padding-bottom: 20px" class="card-header bg-happy-fisher"
+                                         th:text="' Completed : '">
+                                    </div>
+                                    <div class="card-body">
+                                        <div th:each="bug : ${bugs}"
+                                             th:if="${bug.getStatus().equalsIgnoreCase('COMPLETED')}">
+                                            <div class="card-shadow-danger border mb-3 card bg-light border-danger text-danger"
+                                                 th:if="${bug.getPriority()} == 1">
+                                                <div class="card-header bg-light text-danger">
+                                                    <div th:text="${bug.getTitle}" class="pull-left"></div>
+                                                    <a class="btn btn-outline-focus ml-auto pull-right"
+                                                       th:href="@{'/bug/{id}/status/{condition}?pId={pId}' (id=${bug.getId()},pId = ${bug.getProjectId()},condition='IN_PROGRESS')}"
+                                                       th:text="'Uncomplete'"></a>
 
-                                                    <a class="btn btn btn-info ml-auto pull-right"
-                                                       th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
-                                                        Details
-                                                    </a>
                                                 </div>
+                                                <div class="card-body">
+                                                    <div th:text="${bug.getDescription}"></div>
+                                                    <br>
+
+                                                </div>
+                                                <div class="card-footer bg-light">
+                                                    <div class="pull-right ml-auto">
+
+                                                        <a class="btn btn btn-info ml-auto pull-right"
+                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                            Details
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="card-shadow-warning border mb-3 card bg-light border-warning text-warning"
+                                                 th:if="${bug.getPriority()} == 2">
+                                                <div class="card-header bg-light text-warning">
+                                                    <div th:text="${bug.getTitle}" class="pull-left"></div>
+                                                    <a class="btn btn-outline-focus ml-auto pull-right"
+                                                       th:href="@{'/bug/{id}/status/{condition}?pId={pId}' (id=${bug.getId()},pId = ${bug.getProjectId()},condition='IN_PROGRESS')}"
+                                                       th:text="'Uncomplete'"></a>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div th:text="${bug.getDescription}"></div>
+                                                    <br>
+
+                                                </div>
+                                                <div class="card-footer bg-light">
+                                                    <div class="pull-right ml-auto">
+
+                                                        <a class="btn btn btn-info ml-auto pull-right"
+                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                            Details
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="card-shadow-alternate border mb-3 card bg-light border-alternate text-alternate"
+                                                 th:if="${bug.getPriority()} == 3">
+                                                <div class="card-header bg-light text-alternate">
+                                                    <div th:text="${bug.getTitle}" class="pull-left"></div>
+                                                    <a class="btn btn-outline-focus ml-auto pull-right"
+                                                       th:href="@{'/bug/{id}/status/{condition}?pId={pId}' (id=${bug.getId()},pId = ${bug.getProjectId()},condition='IN_PROGRESS')}"
+                                                       th:text="'Uncomplete'"></a>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div th:text="${bug.getDescription}"></div>
+                                                    <br>
+
+                                                </div>
+                                                <div class="card-footer bg-light">
+                                                    <div class="pull-right ml-auto">
+
+                                                        <a class="btn btn btn-info ml-auto pull-right"
+                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                            Details
+                                                        </a>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                         </div>
-                                        <div class="card-shadow-danger border mb-3 card  border-warning text-warning"
-                                             th:if=" ${bug.isCompleted()}">
-                                            <div class="card-header text-warning">
-                                                <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                                <a class="btn btn-outline-focus ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='false')}"
-                                                   th:text="'Set UnCompleted'"></a>
-
-                                            </div>
-                                            <div class="card-body">
-                                                <div th:text="${bug.getDescription}"></div>
-                                                <br>
-
-                                            </div>
-                                            <div class="card-footer">
-                                                <div th:if="${bug.getProjectName()} !=null"
-                                                     th:text="'P/: ' +${bug.getProjectName()}"></div>
-                                                <div class="pull-right ml-auto">
-
-                                                    <a class="btn btn btn-info ml-auto pull-right"
-                                                       th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
-                                                        Details
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
                                     </div>
                                 </div>
+
                             </div>
-                            <div class="col-md-4">
-                                <div th:each="bug:${bugs}">
-                                    <div th:if=" ${bug.getPriority()} == 3">
-                                        <div class="mb-3 card text-white bg-alternate" th:if=" ${!bug.isCompleted()}">
-                                            <div class="card-header">
-                                                <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                                <a class="btn btn-success ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='true')}"
-                                                   th:text="'Set Completed'"></a>
 
-                                            </div>
-                                            <div class="card-body">
-                                                <div th:text="${bug.getDescription}"></div>
-                                                <br>
-
-                                            </div>
-                                            <div class="card-footer">
-                                                <div th:text="'P/: '+${bug.getProjectName()}"></div>
-                                                <div class="pull-right ml-auto">
-
-                                                    <a class="btn btn btn-info ml-auto pull-right"
-                                                       th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
-                                                        Details
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="card-shadow-danger border mb-3 card  border-alternate text-alternate"
-                                             th:if=" ${bug.isCompleted()}">
-                                            <div class="card-header text-alternate">
-                                                <div th:text="${bug.getTitle}" class="pull-left"></div>
-                                                <a class="btn btn-outline-focus ml-auto pull-right"
-                                                   th:href="@{'/bug/{id}/completed/{condition}/{route}' (id=${bug.getId()},route='assigned-to-me',condition='false')}"
-                                                   th:text="'Set UnCompleted'"></a>
-
-                                            </div>
-                                            <div class="card-body">
-                                                <div th:text="${bug.getDescription}"></div>
-                                                <br>
-
-                                            </div>
-                                            <div class="card-footer">
-                                                <div th:if="${bug.getProjectName()} !=null"
-                                                     th:text="'P/: ' +${bug.getProjectName()}"></div>
-                                                <div class="pull-right ml-auto">
-
-                                                    <a class="btn btn btn-info ml-auto pull-right"
-                                                       th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
-                                                        Details
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
