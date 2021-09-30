@@ -1,7 +1,6 @@
 <!DOCTYPE html >
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
-<body>
-<div id="header" th:fragment="head">
+<head id="header" th:fragment="head">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
@@ -9,11 +8,10 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"/>
     <meta name="msapplication-tap-highlight" content="no">
-    <script type="text/javascript" src="webjars/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="webjars/bootstrap/5.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/5.1.0/js/bootstrap.min.js}"></script>
     <script type="text/javascript" th:src="@{/assets/scripts/main.js}"></script>
 
     <link th:href="@{/assets/main.css}" rel="stylesheet">
-</div>
-</body>
+</head>
 </html>
