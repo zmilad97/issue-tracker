@@ -192,8 +192,9 @@ public class BugService {
         return userDtos;
     }
 
-    public List<BugDto> assignedToMe() {
-        List<Bug> bugs = getAssignedToUserBugs(SecurityUtil.getCurrentUser());
+    public List<BugDto> assignedToMeByProject(int projectId) {
+        Project project = projectService.getProjectById(projectId);
+        List<Bug> bugs = getAssignedToUserBugsByProject(SecurityUtil.getCurrentUser(), project);
         List<BugDto> bugDtos = new ArrayList<>();
         bugs.forEach(bug -> {
             BugDto bugDto = getBugDto(bug.getId());
@@ -202,8 +203,8 @@ public class BugService {
         return bugDtos;
     }
 
-    private List<Bug> getAssignedToUserBugs(User user) {
-        return bugRepository.findBugsByAssigned(user);
+    private List<Bug> getAssignedToUserBugsByProject(User user, Project project) {
+        return bugRepository.findBugsByAssignedAndProject(user, project);
     }
 
     public BugDto getAssignedBug(int id) {
