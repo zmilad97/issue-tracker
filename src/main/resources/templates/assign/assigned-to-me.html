@@ -94,10 +94,10 @@
                                                 <div class="card-footer">
                                                     <div class="pull-right ml-auto">
 
-                                                        <a class="btn btn btn-info ml-auto pull-right"
-                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                        <button class="btn btn-primary details"
+                                                                th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                             Details
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -118,11 +118,10 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <div class="pull-right ml-auto">
-
-                                                        <a class="btn btn btn-info ml-auto pull-right"
-                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                        <button class="btn btn-primary details"
+                                                                th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                             Details
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -143,11 +142,10 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <div class="pull-right ml-auto">
-
-                                                        <a class="btn btn btn-info ml-auto pull-right"
-                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                        <button class="btn btn-primary details"
+                                                                th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                             Details
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -187,10 +185,10 @@
                                                 <div class="card-footer bg-light">
                                                     <div class="pull-right ml-auto">
 
-                                                        <a class="btn btn btn-info ml-auto pull-right"
-                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                        <button class="btn btn-primary details"
+                                                                th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                             Details
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -212,10 +210,10 @@
                                                 <div class="card-footer bg-light">
                                                     <div class="pull-right ml-auto">
 
-                                                        <a class="btn btn btn-info ml-auto pull-right"
-                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                        <button class="btn btn-primary details"
+                                                                th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                             Details
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -237,10 +235,10 @@
                                                 <div class="card-footer bg-light">
                                                     <div class="pull-right ml-auto">
 
-                                                        <a class="btn btn btn-info ml-auto pull-right"
-                                                           th:href="@{'/bug/{id}/assigned/details'(id=${bug.getId})}">
+                                                        <button class="btn btn-primary details"
+                                                                th:href="@{'/api/bug/{id}' (id=${bug.getId()})}">
                                                             Details
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -263,6 +261,49 @@
 </div>
 
 <div th:insert="fragments/foot :: #footer"></div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(document).on('click', '.details', function (event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+
+            $.get(href, function (bug, status) {
+                $('.modal-content #pTitle').text(bug.projectName);
+                $('.modal-content #pVersion').text(' / ' + bug.version);
+                $('.modal-content #bTitle').text(bug.title);
+                $('.modal-content #bDescription').text(bug.description);
+                $('.modal-content #bAssignee').text(bug.assignedName);
+                $('.modal-content #bReporter').text(bug.creatorName);
+                if (bug.priority === 1) {
+                    $('.modal-content #bPriority').text('Critical');
+                    $('.modal-content #bPriority').removeClass('badge-warning').removeClass('badge-alternate').addClass('badge-danger');
+                } else if (bug.priority === 2) {
+                    $('.modal-content #bPriority').text('Major');
+                    $('.modal-content #bPriority').removeClass('badge-danger').removeClass('badge-alternate').addClass('badge-warning');
+                } else if (bug.priority === 3) {
+                    $('.modal-content #bPriority').text('Normal');
+                    $('.modal-content #bPriority').removeClass('badge-warning').removeClass('badge-danger').addClass('badge-alternate');
+                }
+
+                $('.modal-content #bSteps').text(bug.steps);
+
+                $('.modal-content #bPassedCreated').text('Created ' + bug.createdTimePassed);
+                if (bug.lastUpdatedTimePassed !== null)
+                    $('.modal-content #bPassedUpdate').text('Last Update  ' + bug.lastUpdatedTimePassed);
+
+                const etext = '/bug/' + bug.id + '/edit';
+                $('.modal-content #bEdit').attr("href", etext);
+                const edelete = '/bug/' + bug.id + '/delete';
+
+                $('.modal-content #bDelete').attr("href", edelete);
+            });
+
+            $('#bug-details-modal').modal('show');
+        });
+    });
+</script>
+<div th:replace="fragments/bug-details-modal :: bug-details-modal"></div>
 </body>
 
 </html>
