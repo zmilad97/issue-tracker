@@ -86,7 +86,7 @@ public class BugController {
     @GetMapping("bug/{id}/assign-user")
     public ModelAndView assignUserToBug(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("/assign/assign-user-to-bug");
-        modelAndView.addObject("users", bugService.assignUser(id));
+        modelAndView.addObject("users", bugService.getUserDtosInBugTeamByBugId(id));
         modelAndView.addObject("bug", bugService.getBugDto(id));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
