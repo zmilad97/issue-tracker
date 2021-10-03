@@ -292,11 +292,17 @@
                 if (bug.lastUpdatedTimePassed !== null)
                     $('.modal-content #bPassedUpdate').text('Last Update  ' + bug.lastUpdatedTimePassed);
 
-               /* const etext = '/bug/' + bug.id + '/edit';
-                $('.modal-content #bEdit').attr("href", etext);
-                const edelete = '/bug/' + bug.id + '/delete';
+                $('#bLog').empty();
+                bug.logs.reverse();
+                bug.logs.forEach(function (log) {
+                    $('<br><p class="bg-royal text-white">&nbsp;' + log + '</p>').appendTo('#bLog');
+                });
 
-                $('.modal-content #bDelete').attr("href", edelete);*/
+                /* const etext = '/bug/' + bug.id + '/edit';
+                 $('.modal-content #bEdit').attr("href", etext);
+                 const edelete = '/bug/' + bug.id + '/delete';
+
+                 $('.modal-content #bDelete').attr("href", edelete);*/
             });
 
             $('#bug-details-modal').modal('show');
