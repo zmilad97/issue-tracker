@@ -71,6 +71,8 @@ public class BugService {
             bug.setTeam(bug.getProject().getTeam());
         }
         bug.setStatus(Status.PENDING);
+        bug.setLogs(new ArrayList<>());
+        bug.getLogs().add(SecurityUtil.getCurrentUser().getUsername() + " Created The Bug");
         bugRepository.save(bug);
     }
 
@@ -117,6 +119,8 @@ public class BugService {
             bugDto.setCreatedTimePassed(toolsService.getPassedDate(bug.getLastUpdate(), LocalDateTime.now()));
         }
 
+        bugDto.setLogs(bug.getLogs());
+
         return bugDto;
     }
 
@@ -135,6 +139,7 @@ public class BugService {
                 bug.setProject(projectService.getProjectById(bugDto.getProjectId()));
                 bug.setTeam(bug.getProject().getTeam());
             }
+            bug.getLogs().add(SecurityUtil.getCurrentUser().getUsername() + " Updated The Bug");
             bugRepository.save(bug);
         }
     }
@@ -157,6 +162,10 @@ public class BugService {
                 if (usersTeam.contains(bug.getTeam())) {
                     bug.setStatus(Status.IN_PROGRESS);
                     bug.setAssigned(user);
+                    if (!user.equals(SecurityUtil.getCurrentUser()))
+                        bug.getLogs().add(SecurityUtil.getCurrentUser().getUsername() + " Changed The Assignee To " + user.getUsername());
+                    else
+                        bug.getLogs().add(SecurityUtil.getCurrentUser().getUsername() + " Takes The Bug");
                     bugRepository.save(bug);
                 }
             }
@@ -173,7 +182,7 @@ public class BugService {
     }
 
 
-    public List<UserDto> assignUser(int id) {
+    public List<UserDto> getUserDtosInBugTeamByBugId(int id) {
         Bug bug = bugRepository.findBugById(id);
         List<UserDto> userDtos = new ArrayList<>();
         if (bug != null && bug.getTeam() != null && bug.getProject() != null) {
@@ -246,7 +255,7 @@ public class BugService {
                 bug.setStatus(Status.PENDING);
                 bug.setAssigned(null);
             }
-
+            bug.getLogs().add(SecurityUtil.getCurrentUser().getUsername() + " Changed The Status To " + status);
             bugRepository.save(bug);
         }
     }
