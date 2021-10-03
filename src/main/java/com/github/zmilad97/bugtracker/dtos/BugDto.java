@@ -1,6 +1,8 @@
 package com.github.zmilad97.bugtracker.dtos;
 
 
+import java.util.List;
+
 public class BugDto {
     private int id;
     private String title;
@@ -20,7 +22,7 @@ public class BugDto {
     private String status;
     private String createdTimePassed;
     private String lastUpdatedTimePassed;
-
+    private List<String> logs;
 
     public String getCreatorName() {
         return creatorName;
@@ -164,5 +166,13 @@ public class BugDto {
 
     public void setLastUpdatedTimePassed(String lastUpdatedTimePassed) {
         this.lastUpdatedTimePassed = lastUpdatedTimePassed;
+    }
+
+    public List<String> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(List<String> logs) {
+        this.logs = logs;
     }
 }
