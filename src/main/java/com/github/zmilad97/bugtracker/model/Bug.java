@@ -2,11 +2,9 @@ package com.github.zmilad97.bugtracker.model;
 
 import com.github.zmilad97.bugtracker.enums.Status;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Bug {
@@ -28,7 +26,9 @@ public class Bug {
     private Project project;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdate;
-    private Status status; //TODO: make it to be Status and use Enum
+    private Status status;
+    @ElementCollection
+    private List<String> logs;
 
     public int getId() {
         return id;
@@ -132,5 +132,13 @@ public class Bug {
 
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public List<String> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(List<String> logs) {
+        this.logs = logs;
     }
 }
