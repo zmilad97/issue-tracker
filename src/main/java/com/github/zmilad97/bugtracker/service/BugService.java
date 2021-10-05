@@ -14,7 +14,6 @@ import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -36,24 +35,18 @@ public class BugService {
         this.toolsService = toolsService;
     }
 
-
-    public List<BugDto> retrieveBugs() {
-        List<Bug> bugs = bugRepository.findBugByCreatorEquals(SecurityUtil.getCurrentUser());
+    public List<BugDto> retrieveBugDtosByUserCreated(User user) {
+        List<Bug> bugs = bugRepository.findBugByCreatorEquals(user);
         List<BugDto> bugDtos = new ArrayList<>();
         bugs.forEach(bug -> {
-            BugDto bugDto = getBugDto(bug.getId());
+            BugDto bugDto = getBugDto(bug);
             bugDtos.add(bugDto);
         });
         return bugDtos;
     }
 
     public Bug getBug(int id) {
-        User user = SecurityUtil.getCurrentUser();
-        Bug bug = bugRepository.findBugById(id);
-        if (bug != null && bug.getCreator().equals(user)) {
-            return bug;
-        } else
-            return new Bug();
+        return bugRepository.findBugById(id);
     }
 
     public void save(BugDto bugDto) {
@@ -64,7 +57,7 @@ public class BugService {
         bug.setVersion(bugDto.getVersion());
         bug.setTitle(bugDto.getTitle());
         bug.setAssigned(userRepository.findUserById(bugDto.getAssignedId()));
-        bug.setCreator(SecurityUtil.getCurrentUser());
+        bug.setCreator(userRepository.findUserById(bugDto.getCreatorId()));
         bug.setPriority(bugDto.getPriority());
         if (bugDto.getProjectId() != -1) {
             bug.setProject(projectService.getProjectById(bugDto.getProjectId()));
@@ -72,12 +65,11 @@ public class BugService {
         }
         bug.setStatus(Status.PENDING);
         bug.setLogs(new ArrayList<>());
-        bug.getLogs().add(SecurityUtil.getCurrentUser().getUsername() + " Created The Bug");
+        bug.getLogs().add(bug.getCreator().getUsername() + " Created The Bug");
         bugRepository.save(bug);
     }
 
-    public BugDto getBugDto(int id) {
-        Bug bug = getBug(id);
+    public BugDto getBugDto(Bug bug) {
         BugDto bugDto = new BugDto();
         bugDto.setId(bug.getId());
         bugDto.setDescription(bug.getDescription());
@@ -144,13 +136,10 @@ public class BugService {
         }
     }
 
-    public void deleteBug(int id) {
-        Bug bug = bugRepository.findBugById(id);
-        if (bug.getCreator().equals(SecurityUtil.getCurrentUser())) {
+    public void deleteBug(Bug bug) {
+        if (bug != null && bug.getCreator().equals(SecurityUtil.getCurrentUser())) {
             bugRepository.delete(bug);
         }
-
-
     }
 
     public void saveAssign(int bugId, int userId) {
@@ -206,7 +195,7 @@ public class BugService {
         List<Bug> bugs = getAssignedToUserBugsByProject(SecurityUtil.getCurrentUser(), project);
         List<BugDto> bugDtos = new ArrayList<>();
         bugs.forEach(bug -> {
-            BugDto bugDto = getBugDto(bug.getId());
+            BugDto bugDto = getBugDto(bug);
             bugDtos.add(bugDto);
         });
         return bugDtos;
@@ -218,8 +207,8 @@ public class BugService {
 
     public BugDto getAssignedBug(int id) {
         Bug bug = bugRepository.findBugById(id);
-        if (bug.getAssigned().equals(SecurityUtil.getCurrentUser()))
-            return getBugDto(bug.getId());
+        if (bug.getAssigned() != null && bug.getAssigned().equals(SecurityUtil.getCurrentUser()))
+            return getBugDto(bug);
         else
             return new BugDto();
     }
@@ -228,7 +217,7 @@ public class BugService {
         List<BugDto> bugDtos = new ArrayList<>();
         List<Bug> bugs = getBugsByProjectId(id);
         bugs.forEach(bug -> {
-            BugDto bugDto = getBugDto(bug.getId());
+            BugDto bugDto = getBugDto(bug);
             bugDtos.add(bugDto);
         });
         return bugDtos;

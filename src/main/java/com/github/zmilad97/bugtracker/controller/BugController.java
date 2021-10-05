@@ -35,7 +35,7 @@ public class BugController {
     @GetMapping("/bugs")
     public ModelAndView bugs() {
         ModelAndView modelAndView = new ModelAndView("/bug/bugs");
-        List<BugDto> bugs = bugService.retrieveBugs();
+        List<BugDto> bugs = bugService.retrieveBugDtosByUserCreated(SecurityUtil.getCurrentUser());
         modelAndView.addObject("bugs", bugs);
         modelAndView.addObject("projects", bugService.getProjectDtoSetFromBugDto(bugs));
         modelAndView.addObject("sideBarProjects",
@@ -87,7 +87,7 @@ public class BugController {
     public ModelAndView assignUserToBug(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("/assign/assign-user-to-bug");
         modelAndView.addObject("users", bugService.getUserDtosInBugTeamByBugId(id));
-        modelAndView.addObject("bug", bugService.getBugDto(id));
+        modelAndView.addObject("bug", bugService.getBugDto(bugService.getBug(id)));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
@@ -119,6 +119,7 @@ public class BugController {
 
     @PostMapping("bug/save")
     public RedirectView saveBug(@ModelAttribute("bug") BugDto bugDto) {
+        bugDto.setCreatorId(SecurityUtil.getCurrentUser().getId());
         bugService.save(bugDto);
         return new RedirectView("/bugs");
     }
@@ -128,7 +129,7 @@ public class BugController {
         ModelAndView modelAndView = new ModelAndView("/bug/edit-bug");
         List<ProjectDto> projects = projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser());
         modelAndView.addObject("projects", projects);
-        modelAndView.addObject("bug", bugService.getBugDto(id));
+        modelAndView.addObject("bug", bugService.getBugDto(bugService.getBug(id)));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
         return modelAndView;
@@ -143,7 +144,7 @@ public class BugController {
 
     @GetMapping("bug/{id}/delete")
     public RedirectView deleteBug(@PathVariable int id) {
-        bugService.deleteBug(id);
+        bugService.deleteBug(bugService.getBug(id));
         return new RedirectView("/bugs");
     }
 

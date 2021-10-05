@@ -19,7 +19,7 @@ public class BugApiController {
 
     @GetMapping("/bug/{id}")
     public BugDto getBug(@PathVariable int id) {
-        return bugService.getBugDto(id); //TODO: make it not to access from other teams
+        return bugService.getBugDto(bugService.getBug(id)); //TODO: make it not to access from other teams
     }
 
 
