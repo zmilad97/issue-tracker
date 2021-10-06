@@ -43,21 +43,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<UserDto> getUserDtoByTeamId(int id) {
-        Set<User> users = teamService.getTeamById(id).getMembers();
-        List<UserDto> userDtos = new ArrayList<>();
-        users.forEach(user -> {
-            UserDto userDto = new UserDto();
-            userDto.setId(user.getId());
-            userDto.setFirstName(user.getFirstName());
-            userDto.setLastName(user.getLastName());
-            userDto.setTeamId(id);
-            userDtos.add(userDto);
-        });
-        return userDtos;
-    }
-
-
     public UserDto getUserDtoByUser(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
