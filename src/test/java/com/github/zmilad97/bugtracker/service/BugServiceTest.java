@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -151,10 +150,10 @@ class BugServiceTest {
     @Test
     @DisplayName("This method should return all the bugs that created by user")
     void retrieveBugs() {
-        Mockito.when(bugRepository.findBugByCreatorEquals(user)).thenReturn(
+        Mockito.when(bugRepository.findBugsByCreatorEquals(user)).thenReturn(
                 bugs.stream().filter(bug -> bug.getCreator().equals(user)).collect(Collectors.toList()));
         List<BugDto> bugDtos = bugService.retrieveBugDtosByUserCreated(user);
-        verify(bugRepository).findBugByCreatorEquals(user);
+        verify(bugRepository).findBugsByCreatorEquals(user);
         assertEquals(bugDtos.size(), 2);
         assertEquals(bugDtos.get(0).getAssignedId(), user.getId());
         assertEquals(bugDtos.get(1).getAssignedId(), user.getId());

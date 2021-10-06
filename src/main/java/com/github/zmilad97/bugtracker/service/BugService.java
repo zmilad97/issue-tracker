@@ -36,7 +36,7 @@ public class BugService {
     }
 
     public List<BugDto> retrieveBugDtosByUserCreated(User user) {
-        List<Bug> bugs = bugRepository.findBugByCreatorEquals(user);
+        List<Bug> bugs = bugRepository.findBugsByCreatorEquals(user);
         List<BugDto> bugDtos = new ArrayList<>();
         bugs.forEach(bug -> {
             BugDto bugDto = getBugDto(bug);

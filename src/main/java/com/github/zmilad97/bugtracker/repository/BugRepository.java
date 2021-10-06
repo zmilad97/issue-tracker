@@ -14,7 +14,7 @@ import java.util.List;
 public interface BugRepository extends JpaRepository<Bug, Integer> {
     Bug findBugById(int id);
 
-    List<Bug> findBugByCreatorEquals(User user);
+    List<Bug> findBugsByCreatorEquals(User user);
 
     List<Bug> findBugsByAssignedAndProject(User user, Project project);
 
