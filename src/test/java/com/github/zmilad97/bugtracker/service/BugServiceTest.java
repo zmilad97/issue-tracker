@@ -38,7 +38,7 @@ class BugServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Mock
+
     private BugService bugService;
 
     private static MockedStatic<SecurityUtil> utilMockedStatic;
