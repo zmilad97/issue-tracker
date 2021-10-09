@@ -8,12 +8,14 @@ import com.github.zmilad97.bugtracker.service.ProjectService;
 import com.github.zmilad97.bugtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -118,10 +120,13 @@ public class BugController {
 
 
     @PostMapping("bug/save")
-    public RedirectView saveBug(@ModelAttribute("bug") BugDto bugDto) {
+    public String saveBug(@ModelAttribute("bug") @Valid BugDto bugDto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "/bug/create-bug";
+        }
         bugDto.setCreatorId(SecurityUtil.getCurrentUser().getId());
         bugService.save(bugDto);
-        return new RedirectView("/bugs");
+        return "redirect:/bugs";
     }
 
     @GetMapping("bug/{id}/edit")
