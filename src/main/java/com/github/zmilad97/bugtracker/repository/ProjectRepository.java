@@ -14,4 +14,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     List<Project> getProjectsByTeam(Team team);
 
+    boolean existsById(Integer id);
+
 }
