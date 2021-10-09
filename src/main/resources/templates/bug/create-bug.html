@@ -88,7 +88,7 @@
                                             <div class="position-relative form-group">
                                                 <label for="title">Title</label>
                                                 <input id="title" class="form-control" type="text" th:field="*{title}">
-                                                <p th:each="error: ${#fields.errors('title')}"
+                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('title')}"
                                                    th:text="${error}">Validation error</p>
                                             </div>
                                         </div>
@@ -97,7 +97,7 @@
                                                 <label for="version">App Version</label>
                                                 <input id="version" class="form-control" type="text"
                                                        th:field="*{version}">
-                                                <p th:each="error: ${#fields.errors('version')}"
+                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('version')}"
                                                    th:text="${error}">Validation error</p>
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@
                                                     <option value="2">Medium</option>
                                                     <option value="3">Low</option>
                                                 </select>
-                                                <p th:each="error: ${#fields.errors('priority')}"
+                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('priority')}"
                                                    th:text="${error}">Validation error</p>
                                             </div>
                                         </div>
@@ -121,14 +121,14 @@
                                         <label for="description">Description</label>
                                         <textarea name="description" id="description"
                                                   class="form-control" th:field="*{description}"></textarea>
-                                        <p th:each="error: ${#fields.errors('description')}"
+                                        <p class="alert alert-danger" th:each="error: ${#fields.errors('description')}"
                                            th:text="${error}">Validation error</p>
                                     </div>
                                     <div class="position-relative form-group">
                                         <label for="steps">steps</label>
                                         <textarea name="steps" id="steps"
                                                   class="form-control" th:field="*{steps}"></textarea>
-                                        <p th:each="error: ${#fields.errors('steps')}"
+                                        <p class="alert alert-danger" th:each="error: ${#fields.errors('steps')}"
                                            th:text="${error}">Validation error</p>
                                     </div>
                                     <div class="position-relative form-group">
@@ -142,7 +142,7 @@
                                                     th:text="'Project : ' + ${project.getTitle()} + ' In Team : ' + ${project.getTeamName()}">
                                             </option>
                                         </select>
-                                        <p th:each="error: ${#fields.errors('projectId')}"
+                                        <p class="alert alert-danger" th:each="error: ${#fields.errors('projectId')}"
                                            th:text="${error}">Validation error</p>
                                     </div>
 
