@@ -9,6 +9,7 @@ import com.github.zmilad97.bugtracker.service.ProjectService;
 import com.github.zmilad97.bugtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -60,12 +61,15 @@ public class HomeController {
 
 
     @PostMapping("/register")
-    public RedirectView register(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors) {
+    public String register(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors, BindingResult result) {
+        if (result.hasErrors()){
+            return "/home/signup";
+        }
         try {
             User registered = userService.registerNewUserAccount(userDto);
-            return new RedirectView("/dashboard");
+            return "redirect:/dashboard";
         } catch (UserAlreadyExistException e) {
-            return new RedirectView("/signup");
+            return "redirect:/signup";
         }
     }
 }
