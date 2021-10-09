@@ -1,10 +1,16 @@
 package com.github.zmilad97.bugtracker.dtos;
 
 
+import com.github.zmilad97.bugtracker.annotation.ProjectExist;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class BugDto {
     private int id;
+    @NotEmpty
+    @NotNull
     private String title;
     private String description;
     private String steps;
@@ -17,7 +23,8 @@ public class BugDto {
     private String teamName;
     private String assignedName;
     private String creatorName;
-    private int projectId;
+    @ProjectExist
+    private Integer projectId;
     private String projectName;
     private String status;
     private String createdTimePassed;
@@ -128,11 +135,11 @@ public class BugDto {
         this.assignedName = assignedName;
     }
 
-    public int getProjectId() {
+    public Integer getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
 
