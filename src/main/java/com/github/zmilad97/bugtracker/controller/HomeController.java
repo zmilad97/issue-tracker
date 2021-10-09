@@ -62,13 +62,13 @@ public class HomeController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors, BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "/home/signup";
         }
         try {
-            User registered = userService.registerNewUserAccount(userDto);
+            userService.registerNewUserAccount(userDto);
             return "redirect:/dashboard";
-        } catch (UserAlreadyExistException e) {
+        } catch (UserAlreadyExistException e) { //TODO : fix here to return error
             return "redirect:/signup";
         }
     }

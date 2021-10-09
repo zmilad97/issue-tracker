@@ -25,7 +25,7 @@ public class UserService {
         this.teamService = teamService;
     }
 
-    public User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException {
+    public void registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException {
         if (emailExist(userDto.getEmail())) {
             throw new UserAlreadyExistException("There is an account with that email address: "
                     + userDto.getEmail());
@@ -40,7 +40,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
         user.setActive(true);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     public UserDto getUserDtoByUser(User user) {
