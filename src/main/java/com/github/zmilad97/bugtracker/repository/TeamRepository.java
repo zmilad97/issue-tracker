@@ -14,4 +14,6 @@ public interface TeamRepository extends JpaRepository<Team, Integer> {
     List<Team> findAllByCreator_Id(int id);
 
     List<Team> findAllByMembersContains(User user);
+
+    boolean existsById(Integer id);
 }
