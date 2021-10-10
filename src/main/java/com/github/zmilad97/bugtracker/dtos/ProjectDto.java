@@ -2,11 +2,15 @@ package com.github.zmilad97.bugtracker.dtos;
 
 import com.github.zmilad97.bugtracker.annotation.TeamExist;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ProjectDto {
 
 
     private int id;
-
+    @NotNull
+    @NotEmpty
     private String title;
     private String description;
     private int creatorId;

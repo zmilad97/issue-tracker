@@ -88,7 +88,8 @@
                                             <div class="position-relative form-group">
                                                 <label for="title">Title</label>
                                                 <input id="title" class="form-control" type="text" th:field="*{title}">
-                                                <p th:each="error: ${#fields.errors('title')}"
+                                                <p class="alert alert-danger"
+                                                   th:each="error: ${#fields.errors('title')}"
                                                    th:text="${error}">Validation error</p>
                                             </div>
                                         </div>
@@ -97,7 +98,7 @@
                                         <label for="description">Description</label>
                                         <textarea name="description" id="description"
                                                   class="form-control" th:field="*{description}"></textarea>
-                                        <p th:each="error: ${#fields.errors('description')}"
+                                        <p class="alert alert-danger" th:each="error: ${#fields.errors('description')}"
                                            th:text="${error}">Validation error</p>
                                     </div>
                                     <div class="form-row">
@@ -113,7 +114,7 @@
                                                             th:text="${team.getTitle()}">
                                                     </option>
                                                 </select>
-                                                <p th:each="error: ${#fields.errors('team')}"
+                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('team')}"
                                                    th:text="${error}">Validation error</p>
                                             </div>
                                         </div>
