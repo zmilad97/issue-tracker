@@ -1,5 +1,7 @@
 package com.github.zmilad97.bugtracker.dtos;
 
+import com.github.zmilad97.bugtracker.annotation.TeamExist;
+
 public class ProjectDto {
 
 
@@ -8,7 +10,8 @@ public class ProjectDto {
     private String title;
     private String description;
     private int creatorId;
-    private int teamId;
+    @TeamExist
+    private Integer teamId;
     private String creatorName;
     private String teamName;
     private String createdAt;
@@ -45,11 +48,11 @@ public class ProjectDto {
         this.creatorId = creatorId;
     }
 
-    public int getTeamId() {
+    public Integer getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(Integer teamId) {
         this.teamId = teamId;
     }
 

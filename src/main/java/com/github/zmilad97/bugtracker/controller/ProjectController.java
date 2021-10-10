@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
+
 @Controller
 public class ProjectController {
     private final ProjectService projectService;
@@ -45,7 +47,7 @@ public class ProjectController {
     }
 
     @PostMapping("/project/save")
-    public RedirectView saveProject(@ModelAttribute("project") ProjectDto projectDto) {
+    public RedirectView saveProject(@ModelAttribute("project") @Valid ProjectDto projectDto) {
         projectService.addProject(projectDto);
         return new RedirectView("/projects");
     }
