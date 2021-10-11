@@ -33,19 +33,19 @@ public class HomeController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ModelAndView index() {
-        return new ModelAndView("/home/index");
+        return new ModelAndView("home/index");
     }
 
     @GetMapping("login")
     public String login() {
-        return "/home/login";
+        return "home/login";
     }
 
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
-        ModelAndView modelAndView = new ModelAndView("/home/dashboard");
+        ModelAndView modelAndView = new ModelAndView("home/dashboard");
         modelAndView.addObject("statistics", homeService.getStatistics());
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
@@ -54,7 +54,7 @@ public class HomeController {
 
     @GetMapping("/signup")
     public ModelAndView signup() {
-        ModelAndView modelAndView = new ModelAndView("/home/signup");
+        ModelAndView modelAndView = new ModelAndView("home/signup");
         modelAndView.addObject("user", new UserDto());
         return modelAndView;
     }
@@ -63,7 +63,7 @@ public class HomeController {
     @PostMapping("/register")
     public String register(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors, BindingResult result) {
         if (result.hasErrors()) {
-            return "/home/signup";
+            return "home/signup";
         }
         try {
             userService.registerNewUserAccount(userDto);

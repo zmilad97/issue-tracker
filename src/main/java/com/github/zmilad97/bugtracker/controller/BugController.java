@@ -36,7 +36,7 @@ public class BugController {
 
     @GetMapping("/bugs")
     public ModelAndView bugs() {
-        ModelAndView modelAndView = new ModelAndView("/bug/bugs");
+        ModelAndView modelAndView = new ModelAndView("bug/bugs");
         List<BugDto> bugs = bugService.retrieveBugDtosByUserCreated(SecurityUtil.getCurrentUser());
         modelAndView.addObject("bugs", bugs);
         modelAndView.addObject("projects", bugService.getProjectDtoSetFromBugDto(bugs));
@@ -47,7 +47,7 @@ public class BugController {
 
     @GetMapping("/bugs/project/{projectId}")
     public ModelAndView projectBugs(@PathVariable int projectId) {
-        ModelAndView modelAndView = new ModelAndView("/bug/project-bugs");
+        ModelAndView modelAndView = new ModelAndView("bug/project-bugs");
         modelAndView.addObject("bugs", bugService.getBugDtosByProjectId(projectId));
         modelAndView.addObject("project", projectService.getDtoById(projectId));
         modelAndView.addObject("user", userService.getUserDtoByUser(SecurityUtil.getCurrentUser()));
@@ -58,7 +58,7 @@ public class BugController {
 
     @GetMapping("/bugs/assigned/{projectId}")
     public ModelAndView assignedToMeByProject(@PathVariable int projectId) { //TODO : fix here
-        ModelAndView modelAndView = new ModelAndView("/assign/assigned-to-me");
+        ModelAndView modelAndView = new ModelAndView("assign/assigned-to-me");
         modelAndView.addObject("bugs", bugService.assignedToMeByProject(projectId));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
@@ -67,7 +67,7 @@ public class BugController {
 
     @GetMapping("bug/{id}")
     public ModelAndView getBug(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("/bug/bug");
+        ModelAndView modelAndView = new ModelAndView("bug/bug");
         modelAndView.addObject("bug", bugService.getBug(id));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
@@ -76,7 +76,7 @@ public class BugController {
 
     @GetMapping("bug/create")
     public ModelAndView createBug() {
-        ModelAndView modelAndView = new ModelAndView("/bug/create-bug");
+        ModelAndView modelAndView = new ModelAndView("bug/create-bug");
         List<ProjectDto> projects = projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser());
         modelAndView.addObject("projects", projects);
         modelAndView.addObject("bug", new BugDto());
@@ -87,7 +87,7 @@ public class BugController {
 
     @GetMapping("bug/{id}/assign-user")
     public ModelAndView assignUserToBug(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("/assign/assign-user-to-bug");
+        ModelAndView modelAndView = new ModelAndView("assign/assign-user-to-bug");
         modelAndView.addObject("users", bugService.getUserDtosInBugTeamByBugId(id));
         modelAndView.addObject("bug", bugService.getBugDto(bugService.getBug(id)));
         modelAndView.addObject("sideBarProjects",
@@ -111,7 +111,7 @@ public class BugController {
 
     @GetMapping("/bug/{id}/assigned/details")
     public ModelAndView assignedDetails(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("/assign/assigned-bug-details"); //TODO: it can be change to simple bug details page
+        ModelAndView modelAndView = new ModelAndView("assign/assigned-bug-details"); //TODO: it can be change to simple bug details page
         modelAndView.addObject("bug", bugService.getAssignedBug(id));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
@@ -122,7 +122,7 @@ public class BugController {
     @PostMapping("bug/save")
     public String saveBug(@ModelAttribute("bug") @Valid BugDto bugDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "/bug/create-bug";
+            return "bug/create-bug";
         }
         bugDto.setCreatorId(SecurityUtil.getCurrentUser().getId());
         bugService.save(bugDto);
@@ -131,7 +131,7 @@ public class BugController {
 
     @GetMapping("bug/{id}/edit")
     public ModelAndView editBug(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("/bug/edit-bug");
+        ModelAndView modelAndView = new ModelAndView("bug/edit-bug");
         List<ProjectDto> projects = projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser());
         modelAndView.addObject("projects", projects);
         modelAndView.addObject("bug", bugService.getBugDto(bugService.getBug(id)));

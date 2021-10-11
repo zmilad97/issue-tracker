@@ -21,7 +21,7 @@ public class TeamController {
 
     @GetMapping("teams")
     public ModelAndView teams() {
-        ModelAndView modelAndView = new ModelAndView("/team/teams");
+        ModelAndView modelAndView = new ModelAndView("team/teams");
         modelAndView.addObject("teams", teamService.getTeamDtoByCreator(SecurityUtil.getCurrentUser().getId()));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
@@ -31,7 +31,7 @@ public class TeamController {
 
     @GetMapping("/teams/im-in")
     public ModelAndView teamsImIn() {
-        ModelAndView modelAndView = new ModelAndView("/team/teams-im-in");
+        ModelAndView modelAndView = new ModelAndView("team/teams-im-in");
         modelAndView.addObject("teams", teamService.getTeamDtoByUser(SecurityUtil.getCurrentUser()));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
@@ -40,7 +40,7 @@ public class TeamController {
 
     @GetMapping("/team/create")
     public ModelAndView createTeam() {
-        ModelAndView modelAndView = new ModelAndView("/team/create-team");
+        ModelAndView modelAndView = new ModelAndView("team/create-team");
         modelAndView.addObject("team", new TeamDto());
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
@@ -61,7 +61,7 @@ public class TeamController {
 
     @GetMapping("/team/{id}/edit")
     public ModelAndView editTeam(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView("/team/edit-team");
+        ModelAndView modelAndView = new ModelAndView("team/edit-team");
         modelAndView.addObject("team", teamService.getTeamDtoByTeamId(id));
         modelAndView.addObject("sideBarProjects",
                 projectService.getProjectByUserParticipated(SecurityUtil.getCurrentUser()));
