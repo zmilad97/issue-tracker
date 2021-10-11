@@ -7,10 +7,7 @@ import com.github.zmilad97.bugtracker.model.User;
 import com.github.zmilad97.bugtracker.repository.TeamRepository;
 import com.github.zmilad97.bugtracker.repository.UserRepository;
 import com.github.zmilad97.bugtracker.security.SecurityUtil;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -64,6 +61,11 @@ class TeamServiceTest {
     @BeforeAll
     static void beforeAll() {
         utilMockedStatic = Mockito.mockStatic(SecurityUtil.class);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        utilMockedStatic.close();
     }
 
     @BeforeEach

@@ -135,7 +135,10 @@ class BugServiceTest {
     static void beforeAll() {
         utilMockedStatic = Mockito.mockStatic(SecurityUtil.class);
     }
-
+    @AfterAll
+    static void afterAll() {
+        utilMockedStatic.close();
+    }
     @BeforeEach
     void setUp() {
         ToolsService toolsService = new ToolsService();

@@ -6,10 +6,7 @@ import com.github.zmilad97.bugtracker.model.Team;
 import com.github.zmilad97.bugtracker.model.User;
 import com.github.zmilad97.bugtracker.repository.ProjectRepository;
 import com.github.zmilad97.bugtracker.security.SecurityUtil;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -81,6 +78,10 @@ class ProjectServiceTest {
         projectService = new ProjectService(projectRepository, teamService);
     }
 
+    @AfterAll
+    static void afterAll() {
+        utilMockedStatic.close();
+    }
 
     @Test
     @DisplayName("This method should return ProjectDto by given Id")

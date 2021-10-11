@@ -16,7 +16,7 @@ class ToolsServiceTest {
         LocalDateTime toDateTime = LocalDateTime.of(2014, 9, 10, 6, 40, 45);
         LocalDateTime fromDateTime = LocalDateTime.of(1984, 12, 16, 7, 45, 55);
         String d = toolsService.getPassedDate(fromDateTime, toDateTime);
-        assertEquals(d, "29 years ago");
+        assertEquals(d, "29 Years Ago");
     }
 
     @Test
@@ -25,7 +25,7 @@ class ToolsServiceTest {
         LocalDateTime toDateTime = LocalDateTime.of(2014, 9, 10, 6, 40, 45);
         LocalDateTime fromDateTime = LocalDateTime.of(2014, 5, 16, 7, 45, 55);
         String d = toolsService.getPassedDate(fromDateTime, toDateTime);
-        assertEquals(d, "3 month ago");
+        assertEquals(d, "3 Month Ago");
     }
 
 
