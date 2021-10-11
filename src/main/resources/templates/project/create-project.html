@@ -81,7 +81,7 @@
                                                             th:text="${team.getTitle()}">
                                                     </option>
                                                 </select>
-                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('team')}"
+                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('teamId')}"
                                                    th:text="${error}">Validation error</p>
                                             </div>
                                         </div>
