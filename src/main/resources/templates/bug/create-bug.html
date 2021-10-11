@@ -54,9 +54,11 @@
                                         <div class="col-md-4">
                                             <div class="position-relative form-group">
                                                 <label for="title">Title</label>
-                                                <input id="title" class="form-control" type="text" th:field="*{title}">
-                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('title')}"
-                                                   th:text="${error}">Validation error</p>
+                                                <input id="title" class="form-control" type="text" th:field="*{title}" required="">
+                                                <div class="invalid-tooltip"
+                                                     style="display: block;" th:each="error: ${#fields.errors('title')}"
+                                                     th:text="${error}">Validation error
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -64,8 +66,11 @@
                                                 <label for="version">App Version</label>
                                                 <input id="version" class="form-control" type="text"
                                                        th:field="*{version}">
-                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('version')}"
-                                                   th:text="${error}">Validation error</p>
+                                                <div class="invalid-tooltip"
+                                                     style="display: block;"
+                                                     th:each="error: ${#fields.errors('version')}"
+                                                     th:text="${error}">Validation error
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -78,8 +83,11 @@
                                                     <option value="2">Medium</option>
                                                     <option value="3">Low</option>
                                                 </select>
-                                                <p class="alert alert-danger" th:each="error: ${#fields.errors('priority')}"
-                                                   th:text="${error}">Validation error</p>
+                                                <div class="invalid-tooltip"
+                                                     style="display: block;"
+                                                     th:each="error: ${#fields.errors('priority')}"
+                                                     th:text="${error}">Validation error
+                                                </div>
                                             </div>
                                         </div>
 
@@ -88,29 +96,35 @@
                                         <label for="description">Description</label>
                                         <textarea name="description" id="description"
                                                   class="form-control" th:field="*{description}"></textarea>
-                                        <p class="alert alert-danger" th:each="error: ${#fields.errors('description')}"
-                                           th:text="${error}">Validation error</p>
+                                        <div class="invalid-tooltip" style="display: block;"
+                                             th:each="error: ${#fields.errors('description')}"
+                                             th:text="${error}">Validation error
+                                        </div>
                                     </div>
                                     <div class="position-relative form-group">
                                         <label for="steps">steps</label>
                                         <textarea name="steps" id="steps"
                                                   class="form-control" th:field="*{steps}"></textarea>
-                                        <p class="alert alert-danger" th:each="error: ${#fields.errors('steps')}"
-                                           th:text="${error}">Validation error</p>
+                                        <div class="invalid-tooltip" style="display: block;"
+                                             th:each="error: ${#fields.errors('steps')}"
+                                             th:text="${error}">Validation error
+                                        </div>
                                     </div>
                                     <div class="position-relative form-group">
                                         <label for="project">Project </label>
                                         <select name="project" id="project"
                                                 class="custom-select"
-                                                th:field="*{projectId}">
+                                                th:field="*{projectId}" required="">
                                             <option value="-1">......Select Project......</option>
                                             <option th:each="project : ${projects}"
                                                     th:value="${project.getId()}"
                                                     th:text="'Project : ' + ${project.getTitle()} + ' In Team : ' + ${project.getTeamName()}">
                                             </option>
                                         </select>
-                                        <p class="alert alert-danger" th:each="error: ${#fields.errors('projectId')}"
-                                           th:text="${error}">Validation error</p>
+                                        <div class="invalid-tooltip" style="display: block;"
+                                             th:each="error: ${#fields.errors('projectId')}"
+                                             th:text="${error}">Validation error
+                                        </div>
                                     </div>
 
                                     <div class="form-actions">
