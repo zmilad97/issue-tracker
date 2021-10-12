@@ -3,7 +3,7 @@
  This is an issue tracking App that allows bug tracking and agile project management.
 Issue-Tracker written in java and uses Spring Framework for backend and uses Mysql as database and Junit for Testing.
 
-After registration you can create your projects and teams then add your coworkers to them, you can define bugs with different priorities and assigned them to anyone you want. 
+After registration you can create your projects and teams then add your coworkers to them, you can define bugs with different priorities and assigned them to anyone in your team. 
 
 ## Live Demo
 You can test issue tracker online using following link [Click Here](https://issue-tracker-milad.herokuapp.com/)
