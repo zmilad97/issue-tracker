@@ -5,9 +5,13 @@ import com.github.zmilad97.bugtracker.security.SecurityUtil;
 import com.github.zmilad97.bugtracker.service.ProjectService;
 import com.github.zmilad97.bugtracker.service.TeamService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.validation.Valid;
 
 @Controller
 public class TeamController {
@@ -48,15 +52,25 @@ public class TeamController {
     }
 
     @PostMapping("/team/save")
-    public RedirectView saveTeam(@ModelAttribute("team") TeamDto teamDto) {
+    public String saveTeam(@ModelAttribute("team") @Valid TeamDto teamDto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute(teamDto);
+            return "team/create-team";
+        }
         teamService.save(teamDto);
-        return new RedirectView("/teams");
+        return "redirect:/teams";
     }
 
     @PostMapping("/team/update-team")
-    public RedirectView updateTeam(@ModelAttribute("team") TeamDto teamDto) {
+    public String updateTeam(@ModelAttribute("team") @Valid TeamDto teamDto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            if (result.hasErrors()) {
+                model.addAttribute(teamDto);
+                return "team/edit-team";
+            }
+        }
         teamService.saveEdit(teamDto);
-        return new RedirectView("/teams");
+        return "redirect:/teams";
     }
 
     @GetMapping("/team/{id}/edit")

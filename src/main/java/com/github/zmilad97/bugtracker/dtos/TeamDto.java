@@ -2,11 +2,15 @@ package com.github.zmilad97.bugtracker.dtos;
 
 import com.github.zmilad97.bugtracker.model.User;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeamDto {
     private int id;
+    @NotEmpty
+    @NotNull
     private String title;
     private String description;
     private int creatorId;
