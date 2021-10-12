@@ -43,21 +43,16 @@
                                 </h5>
                                 <form name="form" th:object="${project}" th:action="@{/project/update}" method="POST"
                                       enctype="utf8" class="needs-validation" novalidate="">
-                                    <div th:if="${param.error}" class="alert alert-error">
-                                        <div th:if="${#fields.hasAnyErrors()}">
-                                            <ul>
-                                                <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
-                                            </ul>
-                                        </div>
-                                    </div>
 
                                     <div class="form-row">
                                         <div class="col-md-4">
                                             <div class="position-relative form-group">
                                                 <label for="title">Title</label>
                                                 <input id="title" class="form-control" type="text" th:field="*{title}">
-                                                <p th:each="error: ${#fields.errors('title')}"
-                                                   th:text="${error}">Validation error</p>
+                                                <div class="invalid-tooltip" style="display: block;"
+                                                     th:each="error: ${#fields.errors('title')}"
+                                                     th:text="${error}">Validation error
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -65,8 +60,10 @@
                                         <label for="description">Description</label>
                                         <textarea name="description" id="description"
                                                   class="form-control" th:field="*{description}"></textarea>
-                                        <p th:each="error: ${#fields.errors('description')}"
-                                           th:text="${error}">Validation error</p>
+                                        <div class="invalid-tooltip" style="display: block;"
+                                             th:each="error: ${#fields.errors('description')}"
+                                             th:text="${error}">Validation error
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6">
@@ -81,8 +78,10 @@
                                                             th:text="${team.getTitle()}">
                                                     </option>
                                                 </select>
-                                                <p th:each="error: ${#fields.errors('team')}"
-                                                   th:text="${error}">Validation error</p>
+                                                <div class="invalid-tooltip" style="display: block;"
+                                                     th:each="error: ${#fields.errors('teamId')}"
+                                                     th:text="${error}">Validation error
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
