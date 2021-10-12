@@ -8,6 +8,7 @@ import com.github.zmilad97.bugtracker.service.ProjectService;
 import com.github.zmilad97.bugtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -120,8 +121,9 @@ public class BugController {
 
 
     @PostMapping("bug/save")
-    public String saveBug(@ModelAttribute("bug") @Valid BugDto bugDto, BindingResult result) {
+    public String saveBug(@ModelAttribute("bug") @Valid BugDto bugDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("bug", bugDto);
             return "bug/create-bug";
         }
         bugDto.setCreatorId(SecurityUtil.getCurrentUser().getId());
@@ -142,9 +144,15 @@ public class BugController {
 
 
     @PostMapping("/bug/update-bug")
-    public RedirectView updateBugs(@ModelAttribute("bug") BugDto bugDto) {
+    public String updateBugs(@ModelAttribute("bug") @Valid BugDto bugDto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            List<ProjectDto> projects = projectService.getProjectDtoByUserParticipated(SecurityUtil.getCurrentUser());
+            model.addAttribute("projects", projects);
+            model.addAttribute("bug", bugDto);
+            return "bug/edit-bug";
+        }
         bugService.update(bugDto);
-        return new RedirectView("/bugs");
+        return "redirect:/bugs";
     }
 
     @GetMapping("bug/{id}/delete")
