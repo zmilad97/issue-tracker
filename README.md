@@ -6,7 +6,8 @@ Issue-Tracker written in java and uses Spring Framework for backend and uses Mys
 After registration you can create your projects and teams then add your coworkers to them, you can define bugs with different priorities and assigned them to anyone you want. 
 
 ## Live Demo
-You can test issue tracker online [Click Here](https://issue-tracker-milad.herokuapp.com/)
+You can test issue tracker online using following link [Click Here](https://issue-tracker-milad.herokuapp.com/)
+
 Login credentials for demo is  username : test , password : test
 
 ## Running Issue-Tracker  localy
